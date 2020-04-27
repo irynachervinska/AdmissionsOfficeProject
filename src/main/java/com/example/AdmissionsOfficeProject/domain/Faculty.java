@@ -15,8 +15,6 @@ public class Faculty {
     private int placesNumberPaid;
     @Column(name = "places_number_free")
     private int placesNumberFree;
-
-    // TODO: 26.04.2020  cascate type
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "faculty_subject_mapping",
             joinColumns = @JoinColumn(name = "subject_id"),

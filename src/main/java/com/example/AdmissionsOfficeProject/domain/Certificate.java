@@ -11,10 +11,11 @@ public class Certificate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    @CollectionTable(name = "subjects")
-//    @MapKeyColumn(name = "subject_id")
-//    private Map<Subject, Integer> subjects;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "certificate_subjects_mapping")
+    @MapKeyColumn(name = "subject_id")
+    @Column(name = "subject")
+    private Map<Subject, Integer> subjects;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -38,13 +39,13 @@ public class Certificate {
         this.title = title;
     }
 
-//    public Map<Subject, Integer> getSubjects() {
-//        return subjects;
-//    }
-//
-//    public void setSubjects(Map<Subject, Integer> subjects) {
-//        this.subjects = subjects;
-//    }
+    public Map<Subject, Integer> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(Map<Subject, Integer> subjects) {
+        this.subjects = subjects;
+    }
 
     public User getUser() {
         return user;

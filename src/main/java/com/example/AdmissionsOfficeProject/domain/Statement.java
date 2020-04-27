@@ -18,10 +18,10 @@ public class Statement {
     private Faculty faculty;
     @Column(name = "average_certificate_mark")
     private int averageCertificateMark;
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    @CollectionTable(name = "average_subject_mark")
-//    @MapKeyColumn(name = "subject_id")
-//    private Map<Subject, Integer> averageSubjectMark;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "statement_average_subject_mark")
+    @MapKeyColumn(name = "subject_id")
+    private Map<Subject, Integer> averageSubjectMark;
     private boolean accepted;
 
     public Statement() {
@@ -59,13 +59,13 @@ public class Statement {
         this.averageCertificateMark = averageCertificateMark;
     }
 
-//    public Map<Subject, Integer> getAverageSubjectMark() {
-//        return averageSubjectMark;
-//    }
-//
-//    public void setAverageSubjectMark(Map<Subject, Integer> averageSubjectMark) {
-//        this.averageSubjectMark = averageSubjectMark;
-//    }
+    public Map<Subject, Integer> getAverageSubjectMark() {
+        return averageSubjectMark;
+    }
+
+    public void setAverageSubjectMark(Map<Subject, Integer> averageSubjectMark) {
+        this.averageSubjectMark = averageSubjectMark;
+    }
 
     public boolean isAccepted() {
         return accepted;
