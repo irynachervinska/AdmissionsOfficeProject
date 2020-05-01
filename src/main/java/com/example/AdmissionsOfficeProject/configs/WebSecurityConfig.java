@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email").passwordParameter("password")
                 .permitAll().successHandler(authenticationSuccessHandler)
                 .and()
-                .logout().logoutSuccessUrl("/login?logout")
+                .logout().logoutSuccessUrl("/?logout")
                 .and()
                 .exceptionHandling().accessDeniedPage("/403")
                 .and()

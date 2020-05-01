@@ -29,13 +29,16 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        String userName  = authentication.getName();
-        request.getSession().setAttribute("name", userName);
+        String email  = authentication.getName();
 
-        Optional<User> byEmail = userRepository.findByEmail(userName);
-        String firstName = byEmail.get().getFirstName();
-        request.getSession().setAttribute("first", firstName);
+        Optional<User> userByEmail = userRepository.findByEmail(email);
+        if(userByEmail.isPresent()){
+            String firstName = userByEmail.get().getFirstName();
+            request.getSession().setAttribute("firstName", firstName);
 
+            String lastName = userByEmail.get().getLastName();
+            request.getSession().setAttribute("lastName", lastName);
+        }
         response.sendRedirect("/");
     }
 }

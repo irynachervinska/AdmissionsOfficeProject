@@ -16,10 +16,11 @@
 </label>
 <div id="sidebarMenu">
     <ul class="sidebarMenuInner">
-        <li>
-            <%=session.getAttribute("name")%>
-            <%=session.getAttribute("first")%>
-
+        <li> <% if (session.getAttribute("firstName") == null) { %>
+            <p> Welcome! </p>
+            <% } else {%>
+            <p> <%=session.getAttribute("firstName")%> <%=session.getAttribute("lastName")%> </p>
+            <% } %>
 
             <span><c:out value="${pageContext.request.remoteUser}"></c:out></span></li>
 
@@ -27,6 +28,14 @@
         <li><a href="/admin">Hello admin</a></li>
         <li><a href="/user">User link</a></li>
         <li><a href="/all">All</a></li>
+        <% if (session.getAttribute("firstName") != null) { %>
+        <li>  <form action="${pageContext.request.contextPath}/logout" method="post" class="logout">
+            <input type="submit" class="button red big" value="LOGOUT" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        </form>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> </li>
+        <% } %>
+
 
     </ul>
 </div>

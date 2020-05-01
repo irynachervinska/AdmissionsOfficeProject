@@ -100,6 +100,7 @@ input[type=checkbox] {
     left: 15px;
     height: 22px;
     width: 22px;
+
 }
 .spinner {
     transition: all 0.3s;
@@ -148,4 +149,18 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 }
 a:hover{
     color: black;
+}
+.logout{
+    padding-top:15px;
+
+}
+.logout input{
+    background-color:aliceblue;
+    border-radius: 5px;
+    width: 90%;
+    height: 40px;
+    background:#FC466B;
+    opacity:0.9;
+    color: #fff;
+    font-size:15px;
 }
