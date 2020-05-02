@@ -1,6 +1,6 @@
 package com.example.AdmissionsOfficeProject.domain;
 
 public enum UserRole {
-    ADMIN,
-    ENROLLEE
+    ROLE_ADMIN,
+    ROLE_ENROLLEE
 }
