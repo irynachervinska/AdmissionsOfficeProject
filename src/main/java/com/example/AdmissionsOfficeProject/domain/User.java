@@ -17,14 +17,34 @@ public class User implements Serializable {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    // TODO: 02.05.2020 unic
     private String email;
     private int age;
     private String password;
     @Enumerated(EnumType.ORDINAL)
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     private Set<UserRole> role;
+    @Column(name = "is_email_verified")
+    private boolean isEmailVerified;
+    private String hash;
 
     public User() {
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public boolean isEmailVerified() {
+        return isEmailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        isEmailVerified = emailVerified;
     }
 
     public static long getSerialVersionUID() {
@@ -86,4 +106,5 @@ public class User implements Serializable {
     public void setRole(Set<UserRole> role) {
         this.role = role;
     }
+
 }

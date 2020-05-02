@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,6 +30,12 @@ public class RegisterController {
     @PostMapping("/register")
     public String createNew (HttpServletRequest request, @ModelAttribute UserDto userDto){
         userService.save(userDto);
+        return "confirmEmail";
+    }
+
+    @GetMapping("/confirmEmail")
+    public String confirmEmail(@RequestParam String hash){
+        userService.confirmEmail(hash);
         return "login";
     }
 

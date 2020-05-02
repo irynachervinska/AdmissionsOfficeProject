@@ -9,20 +9,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private EmailSendingService emailSendingService;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailSendingService emailSendingService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailSendingService = emailSendingService;
     }
 
-    public void save(UserDto userDto){
+    public void save(UserDto userDto) {
         User user = new User();
 
         user.setFirstName(userDto.getFirstName());
@@ -34,10 +38,21 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password));
 
         user.setRole(Collections.singleton(UserRole.ROLE_ENROLLEE));
+        user.setEmailVerified(false);
+
+        UUID uuid = UUID.randomUUID();
+        user.setHash(uuid.toString());
 
 //        if(user.getUsername().equals("admin")){
 //            user.setRoles(new HashSet<UserRole>(Arrays.asList(UserRole.ROLE_USER, UserRole.ROLE_ADMIN)));
 //        }
         userRepository.save(user);
+
+        emailSendingService.sendVerificationEmail(userDto.getEmail(), uuid.toString(), userDto.getFirstName(), userDto.getLastName());
+    }
+
+    public void confirmEmail(String hash) {
+        userRepository.findByHash(hash)
+                .ifPresent(user -> userRepository.isConfirmEmail(user.getId()));
     }
 }
