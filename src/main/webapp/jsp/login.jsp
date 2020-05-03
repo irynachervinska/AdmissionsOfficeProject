@@ -11,7 +11,7 @@
 <body>
 
 <div class="flip-container">
-    <div class="flipper" id="flipper">
+    <div class="flipperLogin" id="flipper">
 
         <div class="front">
             <h1 class="title">Welcome back!</h1>

@@ -1,6 +1,9 @@
 package com.example.AdmissionsOfficeProject.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -14,13 +17,16 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "first_name")
+//    @NotBlank(message = "Cannot be empty")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    // TODO: 02.05.2020 unic
+    @Column(unique = true)
     private String email;
     private int age;
     private String password;
+    @Transient
+    private String passwordConfirm;
     @Enumerated(EnumType.ORDINAL)
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     private Set<UserRole> role;
@@ -107,4 +113,11 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
 }
