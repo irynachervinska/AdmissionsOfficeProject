@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -43,8 +41,8 @@ public class UserService {
         UUID uuid = UUID.randomUUID();
         user.setHash(uuid.toString());
 
-//        if(user.getUsername().equals("admin")){
-//            user.setRoles(new HashSet<UserRole>(Arrays.asList(UserRole.ROLE_USER, UserRole.ROLE_ADMIN)));
+//        if(user.getFirstName().equals("admin")){
+//            user.setRole(new HashSet<UserRole>(Arrays.asList(UserRole.ROLE_ENROLLEE, UserRole.ROLE_ADMIN)));
 //        }
         userRepository.save(user);
 
