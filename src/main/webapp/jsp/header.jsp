@@ -25,7 +25,7 @@
             <span><c:out value="${pageContext.request.remoteUser}"></c:out></span></li>
 
         <li><a href="/login">Login</a></li>
-        <li><a href="/admin">Hello admin</a></li>
+        <li><a href="/faculty">Faculty</a></li>
         <li><a href="/user">User link</a></li>
         <li><a href="/all">All</a></li>
         <% if (session.getAttribute("firstName") != null) { %>

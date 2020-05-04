@@ -18,7 +18,7 @@
             <form action="/spring_security_check" method="post">
 
                 <input type="text" placeholder="Email" name="email"/>
-                <input type="text" placeholder="Password" name="password"/>
+                <input type="password" placeholder="Password" name="password"/>
 
                 <button type="submit" class="button">Login</button>
                 <div>

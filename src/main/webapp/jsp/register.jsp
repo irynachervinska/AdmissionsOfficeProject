@@ -53,7 +53,7 @@
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 </div>
             </form>
-            <a class="flipbutton" id="registerButton" href="/login">Login to my account →</a>
+            <a class="flipbutton" id="registerButton" href="${pageContext.request.contextPath}/login">Login to my account →</a>
         </div>
 
     </div>
