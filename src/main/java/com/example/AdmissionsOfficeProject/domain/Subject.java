@@ -1,6 +1,7 @@
 package com.example.AdmissionsOfficeProject.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "subjects")
@@ -10,12 +11,21 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
-    private int mark;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    //    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
+    @ManyToMany(mappedBy = "subjects")
+    private Set<Faculty> faculties;
 
     public Subject() {
+    }
+
+    public Set<Faculty> getFaculties() {
+        return faculties;
+    }
+
+    public void setFaculties(Set<Faculty> faculties) {
+        this.faculties = faculties;
     }
 
     public int getId() {
@@ -34,19 +44,11 @@ public class Subject {
         this.title = title;
     }
 
-    public int getMark() {
-        return mark;
-    }
-
-    public void setMark(int mark) {
-        this.mark = mark;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }
