@@ -41,11 +41,11 @@ public class UserService {
         UUID uuid = UUID.randomUUID();
         user.setHash(uuid.toString());
 
-//        if(user.getFirstName().equals("admin")){
-//            user.setRole(new HashSet<UserRole>(Arrays.asList(UserRole.ROLE_ENROLLEE, UserRole.ROLE_ADMIN)));
-//        }
-        userRepository.save(user);
 
+        userRepository.save(user);
+        if(user.getFirstName().equals("admin")){
+            user.setRole(new HashSet<UserRole>(Arrays.asList(UserRole.ROLE_ENROLLEE, UserRole.ROLE_ADMIN)));
+        }
         emailSendingService.sendVerificationEmail(userDto.getEmail(), uuid.toString(), userDto.getFirstName(), userDto.getLastName());
     }
 

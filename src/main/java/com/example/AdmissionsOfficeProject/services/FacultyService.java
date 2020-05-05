@@ -2,11 +2,13 @@ package com.example.AdmissionsOfficeProject.services;
 
 import com.example.AdmissionsOfficeProject.daos.FacultyRepository;
 import com.example.AdmissionsOfficeProject.domain.Faculty;
+import com.example.AdmissionsOfficeProject.domain.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class FacultyService {
@@ -23,6 +25,7 @@ public class FacultyService {
     }
 
     public void saveFaculty(Faculty faculty){
+//        faculty.setSubjects(subjects);
         facultyRepository.save(faculty);
     }
 
@@ -33,6 +36,10 @@ public class FacultyService {
 
     public void deleteById(int id){
         facultyRepository.deleteById(id);
+    }
+
+    public Faculty getById(int facultyId){
+        return facultyRepository.getOne(facultyId);
     }
 
 }

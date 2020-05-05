@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface FacultyRepository extends JpaRepository<Faculty, Integer> {
 
     Optional<Faculty> findByTitle(String title);
+
 }

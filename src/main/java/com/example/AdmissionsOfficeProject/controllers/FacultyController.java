@@ -1,7 +1,9 @@
 package com.example.AdmissionsOfficeProject.controllers;
 
 import com.example.AdmissionsOfficeProject.domain.Faculty;
+import com.example.AdmissionsOfficeProject.domain.Subject;
 import com.example.AdmissionsOfficeProject.services.FacultyService;
+import com.example.AdmissionsOfficeProject.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/faculty")
@@ -17,28 +20,30 @@ import java.util.List;
 public class FacultyController {
 
     private FacultyService facultyService;
+    private SubjectService subjectService;
 
     @Autowired
-    public FacultyController(FacultyService facultyService) {
+    public FacultyController(FacultyService facultyService, SubjectService subjectService) {
         this.facultyService = facultyService;
+        this.subjectService = subjectService;
     }
 
     @GetMapping
     public String viewFacultyList(Model model) {
-        List<Faculty> faculties = facultyService.getAllFaculties();
-        model.addAttribute("faculties", faculties);
+        model.addAttribute("faculties", facultyService.getAllFaculties());
+        model.addAttribute("subjects", subjectService.getAllSubjects());
 
         return "faculties";
     }
 
     @GetMapping("/addFaculty")
-    public String newFaculty(Faculty faculty, Model model) {
+    public String showCreationForm(Faculty faculty, Model model) {
         model.addAttribute("faculty", faculty);
         return "createFaculty";
     }
 
     @PostMapping("/addFaculty")
-    public String createFaculty(HttpServletRequest request,
+    public String save(HttpServletRequest request,
                                 @ModelAttribute Faculty faculty) {
         boolean facultyExist = facultyService.checkIfExist(faculty);
         if (facultyExist)
@@ -59,7 +64,6 @@ public class FacultyController {
                                @RequestParam("id") Faculty faculty,
                                Model model) {
         model.addAttribute("faculty", faculty);
-//        req.setAttribute("mode", "EDIT");
         return "editFaculty";
     }
 
@@ -72,6 +76,36 @@ public class FacultyController {
         faculty.setPlacesNumberPaid(placesNumberPaid);
         faculty.setPlacesNumberFree(placesNumberFree);
         facultyService.saveFaculty(faculty);
+
+        return "redirect:/faculty";
+    }
+
+    @GetMapping("addSubjects/{id}")
+    public String addSubject(@PathVariable("id") int facultyId,
+                             Model model){
+        model.addAttribute("subjects", subjectService.getAllSubjects());
+        model.addAttribute("faculty", facultyService.getById(facultyId));
+        return "addSubject";
+    }
+
+
+    @GetMapping("/{id}/subjects")
+    public String facultiesAddSubject(@PathVariable("id") int facultyId,
+                                      @RequestParam int subjectId,
+                                      Model model) {
+        Subject subject = subjectService.getById(subjectId);
+        Faculty faculty = facultyService.getById(facultyId);
+
+        if (faculty != null) {
+            if (!faculty.hasSubject(subject)) {
+                faculty.getSubjects().add(subject);
+            }
+            facultyService.saveFaculty(faculty);
+
+            model.addAttribute("faculty", facultyService.getById(facultyId));
+            model.addAttribute("subjects", subjectService.getAllSubjects());
+            return "redirect:/faculty";
+        }
 
         return "redirect:/faculty";
     }

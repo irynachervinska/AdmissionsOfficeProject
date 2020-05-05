@@ -21,6 +21,9 @@ public class Faculty {
             inverseJoinColumns = @JoinColumn(name = "faculty_id"))
     private Set<Subject> subjects;
 
+    public Faculty() {
+    }
+
     public int getId() {
         return id;
     }
@@ -59,5 +62,14 @@ public class Faculty {
 
     public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
+    }
+
+    public boolean hasSubject(Subject subject) {
+        for (Subject subject1: getSubjects()) {
+            if (subject1.getId() == subject.getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
