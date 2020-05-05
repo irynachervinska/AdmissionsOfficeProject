@@ -9,6 +9,15 @@ public class UserDto {
     private String email;
     private int age;
     private String password;
+    private String passwordConfirm;
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
 
     public String getFirstName() {
         return firstName;

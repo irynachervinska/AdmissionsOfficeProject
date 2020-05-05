@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="script" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -12,22 +14,46 @@
 
 <div class="flip-container">
     <div class="flipper" id="flipper">
-<%--        back--%>
         <div class="front">
             <h1 class="title">Welcome!</h1>
-            <form action="${pageContext.request.contextPath}/register" method="post">
-                <input type="text" placeholder="First Name" name="firstName"/>
-                <input type="text" placeholder="Last Name" name="lastName"/>
-                <input type="email" placeholder="Email" name="email"/>
-                <input type="number" placeholder="Age" name="age"/>
-                <input type="password" placeholder="Password" name="password"/>
+            <form action="${pageContext.request.contextPath}/register" modelAttribute="userDto" method="post">
+
+                <div class="${status.error ? 'has-error' : ''}">
+                    <form:input type="text" path="userDto.firstName" placeholder="First name"/>
+                    <form:errors path="userDto.firstName"/>
+                </div>
+
+                <div class="${status.error ? 'has-error' : ''}">
+                    <form:input type="text" path="userDto.lastName" placeholder="Last name"/>
+                    <form:errors path="userDto.lastName"/>
+                </div>
+
+                <div class="${status.error ? 'has-error' : ''}">
+                    <form:input type="email" path="userDto.email" placeholder="Email@gmail.com"/>
+                    <form:errors path="userDto.email"/>
+                </div>
+
+                <div class="${status.error ? 'has-error' : ''}">
+                    <form:input type="number" path="userDto.age" placeholder="Age"/>
+                    <form:errors path="userDto.age"/>
+                </div>
+
+                <div class="${status.error ? 'has-error' : ''}">
+                    <form:input type="password" path="userDto.password" placeholder="Password"/>
+                    <form:errors path="userDto.password"/>
+                </div>
+
+                <div class="${status.error ? 'has-error' : ''}">
+                    <form:input type="password" path="userDto.passwordConfirm" placeholder="Confirm password"/>
+                    <form:errors path="userDto.passwordConfirm"/>
+                </div>
 
                 <button type="submit" id="register" class="button">Register me</button>
                 <div>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 </div>
             </form>
-            <a class="flipbutton" id="registerButton" href="/login">Login to my account →</a>
+            <a class="flipbutton" id="registerButton" href="${pageContext.request.contextPath}/login">Login to my account →</a>
         </div>
 
     </div>

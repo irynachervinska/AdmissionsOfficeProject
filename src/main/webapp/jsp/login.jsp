@@ -11,14 +11,14 @@
 <body>
 
 <div class="flip-container">
-    <div class="flipper" id="flipper">
+    <div class="flipperLogin" id="flipper">
 
         <div class="front">
             <h1 class="title">Welcome back!</h1>
             <form action="/spring_security_check" method="post">
 
                 <input type="text" placeholder="Email" name="email"/>
-                <input type="text" placeholder="Password" name="password"/>
+                <input type="password" placeholder="Password" name="password"/>
 
                 <button type="submit" class="button">Login</button>
                 <div>
