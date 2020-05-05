@@ -17,12 +17,12 @@
         <div class="flipperLogin" id="flipper">
 
             <div class="front">
-                <h2>Creation a new faculty</h2>
                 <form action="${pageContext.request.contextPath}/faculty/addFaculty" method="post">
 
                     <input type="text" placeholder="Title" name="title"/>
                     <input type="text" placeholder="Number of paid places" name="placesNumberPaid"/>
                     <input type="text" placeholder="Number of free places" name="placesNumberFree"/>
+
 
                     <button type="submit" class="button">Create</button>
                     <div>

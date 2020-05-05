@@ -21,9 +21,9 @@
                 <form action="${pageContext.request.contextPath}/faculty/edit" method="post">
 
                     <input type="hidden" value="${faculty.id}" name="id">
-                    <input type="text" placeholder="Title" name="title" value="faculty.title"/>
-                    <input type="text" placeholder="Number of paid places" name="placesNumberPaid" value="faculty.placesNumberPaid"/>
-                    <input type="text" placeholder="Number of free places" name="placesNumberFree" value="faculty.placesNumberFree"/>
+                    <input type="text" placeholder="Title"  value="${faculty.title}"/>
+                    <input type="text" placeholder="Number of paid places"  value="${faculty.placesNumberPaid}"/>
+                    <input type="text" placeholder="Number of free places" value="${faculty.placesNumberFree}"/>
 
                     <button type="submit" class="button">Save edits</button>
                     <div>
