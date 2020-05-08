@@ -1,6 +1,7 @@
 package com.example.AdmissionsOfficeProject.domain;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -10,17 +11,25 @@ public class Certificate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String title;
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "certificate_subjects_mapping")
-    @MapKeyColumn(name = "subject_id")
-    @Column(name = "subject")
-    private Map<Subject, Integer> subjects;
+
+    @OneToOne
+    private Subject subject;
+
+    private int mark;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     public Certificate() {
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public int getId() {
@@ -31,20 +40,12 @@ public class Certificate {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public int getMark() {
+        return mark;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Map<Subject, Integer> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(Map<Subject, Integer> subjects) {
-        this.subjects = subjects;
+    public void setMark(int mark) {
+        this.mark = mark;
     }
 
     public User getUser() {
