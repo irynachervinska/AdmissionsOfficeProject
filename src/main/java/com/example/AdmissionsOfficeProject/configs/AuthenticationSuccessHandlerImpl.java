@@ -41,6 +41,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
             int userId = userByEmail.get().getId();
             request.getSession().setAttribute("userId", userId);
+
+            request.getSession().setAttribute("user", userByEmail);
         }
 
         response.sendRedirect("/");
