@@ -39,4 +39,8 @@ public class SubjectService {
     public Subject getById(int subjectId){
         return subjectRepository.getOne(subjectId);
     }
+
+    public List<Subject> getAllByIds(int[] subjectIds){
+        return subjectRepository.findSubjectsByIds(subjectIds);
+    }
 }

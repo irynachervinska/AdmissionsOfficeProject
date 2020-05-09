@@ -38,6 +38,7 @@
                     <td>${faculty.placesNumberPaid}</td>
                     <td>${faculty.placesNumberFree}</td>
                     <td>
+
                         <c:forEach var="subject" items="${faculty.subjects}">
                             ${subject.title}
                         </c:forEach>
@@ -47,7 +48,7 @@
                     <td><a href="${pageContext.request.contextPath}/faculty/delete?id=${faculty.id}">delete</a></td>
                     <td>
 
-                        <a href="/faculty/addSubjects/${faculty.id}">Add subjects</a>
+                        <a href="/faculty/addSubjects/subjects/${faculty.id}">Add subjects</a>
                     </td>
                 </tr>
             </c:forEach>

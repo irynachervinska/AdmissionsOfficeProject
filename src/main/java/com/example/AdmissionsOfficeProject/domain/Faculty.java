@@ -1,6 +1,8 @@
 package com.example.AdmissionsOfficeProject.domain;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -10,11 +12,17 @@ public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String title;
+
     @Column(name = "places_number_paid")
     private int placesNumberPaid;
+
     @Column(name = "places_number_free")
     private int placesNumberFree;
+
+    //    @ElementCollection(fetch = FetchType.EAGER)
+//    @Column(name = "subject_id")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "faculty_subject_mapping",
             joinColumns = @JoinColumn(name = "subject_id"),
@@ -56,20 +64,19 @@ public class Faculty {
         this.placesNumberFree = placesNumberFree;
     }
 
+//    public Set<Integer> getSubjects() {
+//        return subjects;
+//    }
+//
+//    public void setSubjects(Set<Integer> subjects) {
+//        this.subjects = subjects;
+//    }
+
     public Set<Subject> getSubjects() {
         return subjects;
     }
 
     public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
-    }
-
-    public boolean hasSubject(Subject subject) {
-        for (Subject subject1: getSubjects()) {
-            if (subject1.getId() == subject.getId()) {
-                return true;
-            }
-        }
-        return false;
     }
 }

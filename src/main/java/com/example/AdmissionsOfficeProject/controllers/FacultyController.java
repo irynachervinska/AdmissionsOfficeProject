@@ -11,8 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/faculty")
@@ -29,22 +29,26 @@ public class FacultyController {
     }
 
     @GetMapping
-    public String viewFacultyList(Model model) {
+    public String viewFacultyList(Model model,
+                                 int[] subjectIds) {
         model.addAttribute("faculties", facultyService.getAllFaculties());
         model.addAttribute("subjects", subjectService.getAllSubjects());
+        
+        model.addAttribute("subjectsById", subjectService.getAllByIds(subjectIds));
 
         return "faculties";
     }
 
     @GetMapping("/addFaculty")
-    public String showCreationForm(Faculty faculty, Model model) {
+    public String showCreationForm(Faculty faculty,
+                                   Model model) {
         model.addAttribute("faculty", faculty);
         return "createFaculty";
     }
 
     @PostMapping("/addFaculty")
     public String save(HttpServletRequest request,
-                                @ModelAttribute Faculty faculty) {
+                       @ModelAttribute Faculty faculty) {
         boolean facultyExist = facultyService.checkIfExist(faculty);
         if (facultyExist)
             return "createFaculty";
@@ -80,33 +84,33 @@ public class FacultyController {
         return "redirect:/faculty";
     }
 
-    @GetMapping("addSubjects/{id}")
+    @GetMapping("addSubjects/subjects/{id}")
     public String addSubject(@PathVariable("id") int facultyId,
-                             Model model){
+                             Model model) {
         model.addAttribute("subjects", subjectService.getAllSubjects());
         model.addAttribute("faculty", facultyService.getById(facultyId));
         return "addSubject";
     }
 
 
-    @GetMapping("/{id}/subjects")
-    public String facultiesAddSubject(@PathVariable("id") int facultyId,
-                                      @RequestParam int subjectId,
+    @PostMapping("/subjects")
+    public String facultiesAddSubject(@RequestParam("id") int facultyId,
+                                      @RequestParam List <Subject> subjectIds,
                                       Model model) {
-        Subject subject = subjectService.getById(subjectId);
         Faculty faculty = facultyService.getById(facultyId);
 
-        if (faculty != null) {
-            if (!faculty.hasSubject(subject)) {
-                faculty.getSubjects().add(subject);
-            }
-            facultyService.saveFaculty(faculty);
-
-            model.addAttribute("faculty", facultyService.getById(facultyId));
-            model.addAttribute("subjects", subjectService.getAllSubjects());
-            return "redirect:/faculty";
+        faculty.setSubjects(new HashSet<>());
+        for (Subject subjectId : subjectIds) {
+            faculty.getSubjects().add(subjectId);
         }
+        facultyService.saveFaculty(faculty);
+
+
+        model.addAttribute("faculty", facultyService.getById(facultyId));
+        model.addAttribute("subjects", subjectService.getAllSubjects());
 
         return "redirect:/faculty";
     }
+
+
 }

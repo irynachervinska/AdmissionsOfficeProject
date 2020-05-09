@@ -10,22 +10,10 @@ public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String title;
-    //    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
-    @ManyToMany(mappedBy = "subjects")
-    private Set<Faculty> faculties;
 
     public Subject() {
-    }
-
-    public Set<Faculty> getFaculties() {
-        return faculties;
-    }
-
-    public void setFaculties(Set<Faculty> faculties) {
-        this.faculties = faculties;
     }
 
     public int getId() {
@@ -44,11 +32,4 @@ public class Subject {
         this.title = title;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 }
