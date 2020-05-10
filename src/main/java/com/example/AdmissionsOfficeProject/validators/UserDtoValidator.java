@@ -33,9 +33,6 @@ public class UserDtoValidator implements Validator {
         if (userDto.getEmail().isEmpty()){
             errors.rejectValue( "email", "", "Email can`t be empty");
         }
-        if (userDto.getAge() == 0){
-            errors.rejectValue( "age", "", "Age can`t be empty");
-        }
         if (userDto.getPassword().isEmpty()){
             errors.rejectValue( "password", "", "Password can`t be empty");
         }
