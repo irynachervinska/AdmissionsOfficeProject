@@ -1,7 +1,7 @@
 package com.example.AdmissionsOfficeProject.domain;
 
 import javax.persistence.*;
-import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Table(name = "statements")
@@ -10,21 +10,44 @@ public class Statement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
+
     @Column(name = "average_certificate_mark")
     private int averageCertificateMark;
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "statement_average_subject_mark")
-    @MapKeyColumn(name = "subject_id")
-    private Map<Subject, Integer> averageSubjectMark;
-    private boolean accepted;
+
+    @ManyToMany
+    @JoinTable(name = "statement_examMarks_mapping",
+            joinColumns = @JoinColumn(name = "certificate_id"),
+            inverseJoinColumns = @JoinColumn(name = "statement_id"))
+    private Set<Certificate> examMarks;
+
+    @Column(name = "average_exam_mark")
+    private int averageExamMark;
 
     public Statement() {
+    }
+
+    public int getAverageExamMark() {
+        return averageExamMark;
+    }
+
+    public void setAverageExamMark(int averageExamMark) {
+        this.averageExamMark = averageExamMark;
+    }
+
+    public Set<Certificate> getExamMarks() {
+        return examMarks;
+    }
+
+    public void setExamMarks(Set<Certificate> examMarks) {
+        this.examMarks = examMarks;
     }
 
     public int getId() {
@@ -59,19 +82,4 @@ public class Statement {
         this.averageCertificateMark = averageCertificateMark;
     }
 
-    public Map<Subject, Integer> getAverageSubjectMark() {
-        return averageSubjectMark;
-    }
-
-    public void setAverageSubjectMark(Map<Subject, Integer> averageSubjectMark) {
-        this.averageSubjectMark = averageSubjectMark;
-    }
-
-    public boolean isAccepted() {
-        return accepted;
-    }
-
-    public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
-    }
 }

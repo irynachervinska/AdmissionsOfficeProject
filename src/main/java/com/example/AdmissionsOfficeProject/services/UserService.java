@@ -53,4 +53,12 @@ public class UserService {
         userRepository.findByHash(hash)
                 .ifPresent(user -> userRepository.isConfirmEmail(user.getId()));
     }
+
+    public Optional<User> findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> findById(int id){
+        return userRepository.findById(id);
+    }
 }
