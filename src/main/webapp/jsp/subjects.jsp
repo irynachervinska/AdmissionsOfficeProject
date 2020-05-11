@@ -30,9 +30,7 @@
                     <td>${subject.title}</td>
                     <td><a href="${pageContext.request.contextPath}/subject/edit?id=${subject.id}">edit</a></td>
                     <td><a href="${pageContext.request.contextPath}/subject/delete?id=${subject.id}">delete</a></td>
-                    <td>
-                        <button type="submit" class="button">Save edits</button>
-                    </td>
+
                 </tr>
             </c:forEach>
             </tbody>
