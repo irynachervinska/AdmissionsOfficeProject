@@ -1,6 +1,7 @@
 package com.example.AdmissionsOfficeProject.domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -8,7 +9,7 @@ import java.util.Set;
 public class Statement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @ManyToOne
@@ -31,7 +32,18 @@ public class Statement {
     @Column(name = "average_exam_mark")
     private int averageExamMark;
 
+    @OneToOne(mappedBy = "statement", cascade = CascadeType.MERGE)
+    private RatingList ratingList;
+
     public Statement() {
+    }
+
+    public RatingList getRatingList() {
+        return ratingList;
+    }
+
+    public void setRatingList(RatingList ratingList) {
+        this.ratingList = ratingList;
     }
 
     public int getAverageExamMark() {
@@ -82,4 +94,22 @@ public class Statement {
         this.averageCertificateMark = averageCertificateMark;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Statement statement = (Statement) o;
+        return getId() == statement.getId() &&
+                getAverageCertificateMark() == statement.getAverageCertificateMark() &&
+                getAverageExamMark() == statement.getAverageExamMark() &&
+                Objects.equals(getUser(), statement.getUser()) &&
+                Objects.equals(getFaculty(), statement.getFaculty()) &&
+                Objects.equals(getExamMarks(), statement.getExamMarks()) &&
+                Objects.equals(getRatingList(), statement.getRatingList());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUser(), getFaculty(), getAverageCertificateMark(), getExamMarks(), getAverageExamMark(), getRatingList());
+    }
 }
