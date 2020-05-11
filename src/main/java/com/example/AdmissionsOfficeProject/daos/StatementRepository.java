@@ -14,4 +14,6 @@ public interface StatementRepository extends JpaRepository<Statement, Integer> {
     Optional<Statement> findByUser(User user);
 
     List<Statement> findAllByUserId(int userId);
+
+    List<Statement> findAllByFacultyId(int facultyId);
 }

@@ -63,41 +63,16 @@ public class StatementController {
         model.addAttribute("subjects", subjectService.getAllSubjects());
         model.addAttribute("certificates", certificateService.getAll());
 
-
         return "statementCreation";
     }
 
     @PostMapping("/create")
     public String createStatement(Statement statement,
-                                  Certificate certificate,
                                   @RequestParam int facultyId,
                                   @RequestParam int averageCertificateMark,
                                   @RequestParam int userId,
                                   @RequestParam List<Certificate> certificateIds) {
-
-        Faculty faculty = facultyService.getById(facultyId);
-        statement.setFaculty(faculty);
-        statement.setAverageCertificateMark(averageCertificateMark);
-        Optional<User> user = userService.findById(userId);
-        user.ifPresent(statement::setUser);
-
-        statement.setExamMarks(new HashSet<>());
-        for (Certificate certificateId : certificateIds) {
-            statement.getExamMarks().add(certificateId);
-        }
-
-        //calculate average mark
-//        List<Certificate> certificateList = certificateService.getAll();
-        int total = 0;
-        int loop = 0;
-        for(Certificate certificate1 : certificateIds){
-            total += certificate1.getMark();
-            loop ++;
-        }
-        int averageExamMark = total / loop;
-        statement.setAverageExamMark(averageExamMark);
-
-        statementService.save(statement);
+        statementService.save(statement, facultyId, averageCertificateMark, userId, certificateIds);
         return "redirect:/statement";
     }
 
