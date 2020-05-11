@@ -48,7 +48,8 @@
                     <td><a href="${pageContext.request.contextPath}/faculty/delete?id=${faculty.id}">delete</a></td>
                     <td>
 
-                        <a href="/faculty/addSubjects/subjects/${faculty.id}">Add subjects</a>
+                        <a href="/faculty/addSubjects/subjects/${faculty.id}">Add subjects</a> <br>
+                        <a href="faculty/ratingList/${faculty.id}">View rating list by this faculty</a>
                     </td>
                 </tr>
             </c:forEach>
