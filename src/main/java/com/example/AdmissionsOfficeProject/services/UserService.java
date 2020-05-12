@@ -4,6 +4,8 @@ import com.example.AdmissionsOfficeProject.daos.UserRepository;
 import com.example.AdmissionsOfficeProject.domain.User;
 import com.example.AdmissionsOfficeProject.domain.UserRole;
 import com.example.AdmissionsOfficeProject.dtos.UserDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import java.util.*;
 
 @Service
 public class UserService {
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
@@ -25,6 +28,7 @@ public class UserService {
     }
 
     public void save(UserDto userDto) {
+        LOG.trace("Creating new user...");
         User user = new User();
 
         user.setFirstName(userDto.getFirstName());
@@ -50,15 +54,18 @@ public class UserService {
     }
 
     public void confirmEmail(String hash) {
+        LOG.trace("Confirming usr email...");
         userRepository.findByHash(hash)
                 .ifPresent(user -> userRepository.isConfirmEmail(user.getId()));
     }
 
     public Optional<User> findByEmail(String email){
+        LOG.trace("Find user by email " + email);
         return userRepository.findByEmail(email);
     }
 
     public Optional<User> findById(int id){
+        LOG.trace("Find user by id " + id);
         return userRepository.findById(id);
     }
 }
