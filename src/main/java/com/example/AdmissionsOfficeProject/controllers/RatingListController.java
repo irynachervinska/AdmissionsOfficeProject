@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class RatingListController {
@@ -36,8 +37,11 @@ public class RatingListController {
                                  @PathVariable("id") int facultyId,
                                  RatingList ratingList){
         List<Statement> allByFacultyId = statementService.findAllByFacultyId(facultyId);
+        List<Integer> statementsIds = allByFacultyId.stream()
+                .map(Statement::getId)
+                .collect(Collectors.toList());
 
-        model.addAttribute("ratingList", ratingListService.getRatingListIn(allByFacultyId));
+        model.addAttribute("ratingList", ratingListService.getRatingListIn(statementsIds));
         Faculty faculty = facultyService.getById(facultyId);
         model.addAttribute("faculty", faculty);
 

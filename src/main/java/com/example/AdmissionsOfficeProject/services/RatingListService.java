@@ -56,8 +56,8 @@ public class RatingListService {
         ratingListRepository.accept(statementId);
     }
 
-    public List<RatingList> getRatingListIn(List<Statement> allByFacultyId){
-        return ratingListRepository.findByStatementInAndOrderByTotalMarkDesc(allByFacultyId);
+    public List<RatingList> getRatingListIn(List<Integer> statementsIds){
+        return ratingListRepository.findByStatementInAndOrderByTotalMarkDesc(statementsIds);
     }
 
 
