@@ -38,8 +38,13 @@ public class SubjectController {
     }
 
     @PostMapping("/addSubject")
-    public String createSubject(HttpServletRequest request,
-                                @ModelAttribute Subject subject) {
+    public String createSubject(@ModelAttribute Subject subject, Model model) {
+        if (subjectService.checkIfExist(subject)){
+            // TODO: 12.05.2020  
+            model.addAttribute("subjectExistError", "Subject with such title already exists");
+            return "createSubject";
+        }
+
         subjectService.save(subject);
         return "redirect:/subject";
     }

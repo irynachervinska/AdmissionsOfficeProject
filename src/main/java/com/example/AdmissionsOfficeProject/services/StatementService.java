@@ -3,10 +3,7 @@ package com.example.AdmissionsOfficeProject.services;
 import com.example.AdmissionsOfficeProject.daos.FacultyRepository;
 import com.example.AdmissionsOfficeProject.daos.StatementRepository;
 import com.example.AdmissionsOfficeProject.daos.UserRepository;
-import com.example.AdmissionsOfficeProject.domain.Certificate;
-import com.example.AdmissionsOfficeProject.domain.Faculty;
-import com.example.AdmissionsOfficeProject.domain.Statement;
-import com.example.AdmissionsOfficeProject.domain.User;
+import com.example.AdmissionsOfficeProject.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +20,17 @@ public class StatementService {
     private StatementRepository statementRepository;
     private FacultyRepository facultyRepository;
     private UserRepository userRepository;
+    private RatingListService ratingListService;
 
     @Autowired
     public StatementService(StatementRepository statementRepository,
                             FacultyRepository facultyRepository,
-                            UserRepository userRepository) {
+                            UserRepository userRepository,
+                            RatingListService ratingListService) {
         this.statementRepository = statementRepository;
         this.facultyRepository = facultyRepository;
         this.userRepository = userRepository;
+        this.ratingListService = ratingListService;
     }
 
     public List<Statement> findAll() {
@@ -43,10 +43,9 @@ public class StatementService {
         return statementRepository.findByUser(user);
     }
 
-    public boolean checkIfExist(User user) {
+    public boolean checkIfExist(int facultyId, int userId) {
         LOG.trace("Checking if statement by userId exists in DB...");
-        Optional<Statement> userMaybe = statementRepository.findByUser(user);
-        return userMaybe.isPresent();
+        return statementRepository.checkIfExist(facultyId, userId);
     }
 
     public void save(Statement statement,
@@ -76,6 +75,9 @@ public class StatementService {
         }
         int averageExamMark = total / loop;
         statement.setAverageExamMark(averageExamMark);
+
+        RatingList ratingList = ratingListService.save(statement);
+        statement.setRatingList(ratingList);
 
         statementRepository.save(statement);
     }

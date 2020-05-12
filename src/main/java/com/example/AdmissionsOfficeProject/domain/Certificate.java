@@ -58,22 +58,6 @@ public class Certificate {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Certificate that = (Certificate) o;
-        return getId() == that.getId() &&
-                getMark() == that.getMark() &&
-                Objects.equals(getSubject(), that.getSubject()) &&
-                Objects.equals(getUser(), that.getUser());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getSubject(), getMark(), getUser());
-    }
-
-    @Override
     public String toString() {
         return subject.getTitle() + "-" + mark;
     }

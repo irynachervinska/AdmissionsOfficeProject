@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -38,10 +37,10 @@ public class RatingListController {
                                  RatingList ratingList){
         List<Statement> allByFacultyId = statementService.findAllByFacultyId(facultyId);
 
-        ratingListService.save(ratingList, allByFacultyId);
-        model.addAttribute("ratingList", ratingListService.findByOrderByTotalMark());
+        model.addAttribute("ratingList", ratingListService.getRatingListIn(allByFacultyId));
         Faculty faculty = facultyService.getById(facultyId);
         model.addAttribute("faculty", faculty);
+
         return "ratingList";
     }
 
@@ -55,13 +54,8 @@ public class RatingListController {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/statementsToAccept/accept/{statementId}")
-    public String acceptStatement(RatingList ratingList,
-                                  @PathVariable("statementId") int statementId){
-        RatingList byStatementId = ratingListService.findByStatementId(statementId);
-        ratingList.setStatement(byStatementId.getStatement());
-
+    public String acceptStatement(@PathVariable("statementId") int statementId){
         ratingListService.accept(statementId);
-        ratingListService.save(ratingList);
-        return "allStatementsToAccept";
+        return "redirect:/statementsToAccept";
     }
 }

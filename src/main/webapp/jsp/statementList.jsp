@@ -31,7 +31,6 @@
                 <th>User email</th>
                 <th>Faculty</th>
                 <th>Average Certificate Mark</th>
-<%--                <th>Subjects and marks</th>--%>
                 <th>Average of exams subjects</th>
                 <%--                <th>Edit</th>--%>
                 <th>Delete</th>
@@ -46,11 +45,6 @@
                     <td>${sessionScope.user.get().email} </td>
                     <td>${statement.faculty.title}</td>
                     <td>${statement.averageCertificateMark}</td>
-                    <td>
-<%--                        <c:forEach items="${certificate}">--%>
-<%--                            ${certificate.subject.title} - ${certificate.mark}--%>
-<%--                        </c:forEach>--%>
-                    </td>
                     <td>${statement.averageExamMark}</td>
                         <%--                    <th>Edit</th>--%>
                     <th><a href="${pageContext.request.contextPath}/statement/delete?id=${statement.id}">delete</a></th>

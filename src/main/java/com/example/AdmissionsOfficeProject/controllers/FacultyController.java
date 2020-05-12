@@ -47,11 +47,13 @@ public class FacultyController {
     }
 
     @PostMapping("/addFaculty")
-    public String save(HttpServletRequest request,
-                       @ModelAttribute Faculty faculty) {
+    public String save(@ModelAttribute Faculty faculty,
+                       Model model) {
         boolean facultyExist = facultyService.checkIfExist(faculty);
-        if (facultyExist)
+        if (facultyExist){
+            model.addAttribute("facultyExistError", "Faculty with such title already exists");
             return "createFaculty";
+        }
 
         facultyService.saveFaculty(faculty);
         return "redirect:/faculty";

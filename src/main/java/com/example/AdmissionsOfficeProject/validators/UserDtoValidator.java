@@ -13,8 +13,12 @@ import java.util.Optional;
 @Component
 public class UserDtoValidator implements Validator {
 
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public UserDtoValidator(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {

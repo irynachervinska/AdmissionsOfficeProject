@@ -27,7 +27,6 @@
                 <th>Total point</th>
                 <th>Status</th>
                 <th>Accept</th>
-                <th>Reject</th>
             </tr>
             </thead>
             <c:forEach var="statement" items="${allStatementsToAccept}">
@@ -43,7 +42,6 @@
                     <td>${statement.totalMark}</td>
                     <td>${statement.accepted}</td>
                     <td><a href="${pageContext.request.contextPath}/statementsToAccept/accept/${statement.id}"> Accept </a></td>
-                    <td>Reject</td>
                 </tr>
                 </tbody>
             </c:forEach>

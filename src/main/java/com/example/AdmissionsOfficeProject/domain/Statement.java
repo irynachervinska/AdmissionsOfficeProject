@@ -9,7 +9,7 @@ import java.util.Set;
 public class Statement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
@@ -32,7 +32,7 @@ public class Statement {
     @Column(name = "average_exam_mark")
     private int averageExamMark;
 
-    @OneToOne(mappedBy = "statement", cascade = CascadeType.MERGE)
+    @OneToOne(mappedBy = "statement", cascade = CascadeType.ALL)
     private RatingList ratingList;
 
     public Statement() {
@@ -94,22 +94,5 @@ public class Statement {
         this.averageCertificateMark = averageCertificateMark;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Statement statement = (Statement) o;
-        return getId() == statement.getId() &&
-                getAverageCertificateMark() == statement.getAverageCertificateMark() &&
-                getAverageExamMark() == statement.getAverageExamMark() &&
-                Objects.equals(getUser(), statement.getUser()) &&
-                Objects.equals(getFaculty(), statement.getFaculty()) &&
-                Objects.equals(getExamMarks(), statement.getExamMarks()) &&
-                Objects.equals(getRatingList(), statement.getRatingList());
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getUser(), getFaculty(), getAverageCertificateMark(), getExamMarks(), getAverageExamMark(), getRatingList());
-    }
 }

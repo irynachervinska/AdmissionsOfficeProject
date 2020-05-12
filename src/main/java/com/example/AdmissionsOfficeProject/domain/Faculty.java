@@ -69,22 +69,7 @@ public class Faculty {
         this.subjects = subjects;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Faculty faculty = (Faculty) o;
-        return getId() == faculty.getId() &&
-                getPlacesNumberPaid() == faculty.getPlacesNumberPaid() &&
-                getPlacesNumberFree() == faculty.getPlacesNumberFree() &&
-                Objects.equals(getTitle(), faculty.getTitle()) &&
-                Objects.equals(getSubjects(), faculty.getSubjects());
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getPlacesNumberPaid(), getPlacesNumberFree(), getSubjects());
-    }
 
     @Override
     public String toString() {

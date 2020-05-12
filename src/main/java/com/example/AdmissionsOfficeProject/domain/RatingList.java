@@ -56,29 +56,4 @@ public class RatingList{
         this.accepted = accepted;
     }
 
-//    @Override
-//    public int compareTo(RatingList o) {
-//        if (this.totalMark > o.totalMark) {
-//            return 1;
-//        } else if (this.totalMark < o.totalMark) {
-//            return -1;
-//        }
-//        return 0;
-//    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RatingList that = (RatingList) o;
-        return getId() == that.getId() &&
-                Double.compare(that.getTotalMark(), getTotalMark()) == 0 &&
-                isAccepted() == that.isAccepted() &&
-                Objects.equals(getStatement(), that.getStatement());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getTotalMark(), getStatement(), isAccepted());
-    }
 }

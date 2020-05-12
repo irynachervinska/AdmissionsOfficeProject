@@ -1,6 +1,8 @@
 package com.example.AdmissionsOfficeProject.controllers;
 
-import com.example.AdmissionsOfficeProject.domain.*;
+import com.example.AdmissionsOfficeProject.domain.Certificate;
+import com.example.AdmissionsOfficeProject.domain.RatingList;
+import com.example.AdmissionsOfficeProject.domain.Statement;
 import com.example.AdmissionsOfficeProject.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/statement")
@@ -57,8 +57,7 @@ public class StatementController {
     }
 
     @GetMapping("/create")
-    public String viewCreationForm(HttpServletRequest request,
-                                   Model model) {
+    public String viewCreationForm(Model model) {
         model.addAttribute("faculties", facultyService.getAllFaculties());
         model.addAttribute("subjects", subjectService.getAllSubjects());
         model.addAttribute("certificates", certificateService.getAll());
@@ -71,7 +70,13 @@ public class StatementController {
                                   @RequestParam int facultyId,
                                   @RequestParam int averageCertificateMark,
                                   @RequestParam int userId,
-                                  @RequestParam List<Certificate> certificateIds) {
+                                  @RequestParam List<Certificate> certificateIds,
+                                  Model model) {
+        boolean checkIfExist = statementService.checkIfExist(facultyId, userId);
+        if (checkIfExist){
+            model.addAttribute("statementExistError", "Statement for this faculty is already exists");
+            return "statementCreation";
+        }
         statementService.save(statement, facultyId, averageCertificateMark, userId, certificateIds);
         return "redirect:/statement";
     }
