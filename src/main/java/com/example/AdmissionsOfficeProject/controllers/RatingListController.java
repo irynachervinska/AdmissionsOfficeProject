@@ -34,14 +34,10 @@ public class RatingListController {
 
     @GetMapping("faculty/ratingList/{id}")
     public String viewRationList(Model model,
-                                 @PathVariable("id") int facultyId,
-                                 RatingList ratingList){
-        List<Statement> allByFacultyId = statementService.findAllByFacultyId(facultyId);
-        List<Integer> statementsIds = allByFacultyId.stream()
-                .map(Statement::getId)
-                .collect(Collectors.toList());
+                                 @PathVariable("id") int facultyId){
+        List<Integer> allIdsByFacultyId = statementService.getAllIdsByFacultyId(facultyId);
 
-        model.addAttribute("ratingList", ratingListService.getRatingListIn(statementsIds));
+        model.addAttribute("ratingList", ratingListService.getRatingListIn(allIdsByFacultyId));
         Faculty faculty = facultyService.getById(facultyId);
         model.addAttribute("faculty", faculty);
 

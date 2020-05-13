@@ -92,9 +92,13 @@ public class StatementService {
         statementRepository.deleteById(id);
     }
 
-    public List<Statement> findAllByFacultyId(int facultyId) {
-        LOG.trace("Getting all statements by userId " + facultyId);
-        return statementRepository.findAllByFacultyId(facultyId);
+//    public List<Statement> findAllByFacultyId(int facultyId) {
+//        LOG.trace("Getting all statements by userId " + facultyId);
+//        return statementRepository.findAllByFacultyId(facultyId);
+//    }
+
+    public List<Integer> getAllIdsByFacultyId (int facultyId){
+        return statementRepository.getAllIds(facultyId);
     }
 
 

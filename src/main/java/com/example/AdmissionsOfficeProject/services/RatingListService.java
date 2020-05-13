@@ -57,7 +57,7 @@ public class RatingListService {
     }
 
     public List<RatingList> getRatingListIn(List<Integer> statementsIds){
-        return ratingListRepository.findByStatementInAndOrderByTotalMarkDesc(statementsIds);
+        return ratingListRepository.getRatingListByStatement(statementsIds);
     }
 
 

@@ -23,6 +23,6 @@ public interface RatingListRepository extends JpaRepository<RatingList, Integer>
     @Query("Update RatingList r set r.accepted=true where r.id = :statementId")
     void accept(@Param("statementId") int statementId);
 
-    @Query("SELECT r FROM RatingList r where r.statement.faculty.id in :facultyId order by r.totalMark DESC ")
-    List<RatingList> findByStatementInAndOrderByTotalMarkDesc (@Param("facultyId") List<Integer> statementsIds);
+    @Query("SELECT r FROM RatingList r where r.statement.id in :statementIds order by r.totalMark DESC ")
+    List<RatingList> getRatingListByStatement (@Param("statementIds") List<Integer> statementsIds);
 }

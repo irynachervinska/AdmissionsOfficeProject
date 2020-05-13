@@ -44,11 +44,12 @@ public class StatementController {
     @GetMapping
     public String viewApplicationList(Model model,
                                       HttpServletRequest request) {
-        model.addAttribute("statements", statementService.findAll());
-        model.addAttribute("certificates", certificateService.getAll());
-
         int userId = (int) request.getSession().getAttribute("userId");
         List<Statement> statementsByUserId = statementService.getAllByUserId(userId);
+
+        model.addAttribute("statements", statementsByUserId);
+//        model.addAttribute("certificates", certificateService.getAll());
+
         if (statementsByUserId.size() >= 3) {
             model.addAttribute("errorMassage", "More than 3 statements");
         }
@@ -72,11 +73,11 @@ public class StatementController {
                                   @RequestParam int userId,
                                   @RequestParam List<Certificate> certificateIds,
                                   Model model) {
-        boolean checkIfExist = statementService.checkIfExist(facultyId, userId);
-        if (checkIfExist){
-            model.addAttribute("statementExistError", "Statement for this faculty is already exists");
-            return "statementCreation";
-        }
+//        boolean checkIfExist = statementService.checkIfExist(facultyId, userId);
+//        if (checkIfExist){
+//            model.addAttribute("statementExistError", "Statement for this faculty is already exists");
+//            return "statementCreation";
+//        }
         statementService.save(statement, facultyId, averageCertificateMark, userId, certificateIds);
         return "redirect:/statement";
     }

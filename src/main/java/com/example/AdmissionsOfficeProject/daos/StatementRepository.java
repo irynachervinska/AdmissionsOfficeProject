@@ -25,5 +25,7 @@ public interface StatementRepository extends JpaRepository<Statement, Integer> {
     boolean checkIfExist(@Param("facultyId") int facultyId,
                          @Param("userId") int userId);
 
+    @Query("select s.id from Statement s where s.faculty.id = :facultyId")
+    List<Integer> getAllIds(@Param("facultyId") int facultyId);
 
 }
