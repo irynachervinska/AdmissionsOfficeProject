@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,8 +50,16 @@ public class FacultyController {
     }
 
     @PostMapping("/addFaculty")
-    public String save(@ModelAttribute Faculty faculty,
+    public String save(@ModelAttribute @Valid Faculty faculty,
+                       BindingResult bindingResult,
                        Model model) {
+        if(bindingResult.hasErrors()){
+            FieldError fieldError = bindingResult.getFieldError();
+            assert fieldError != null;
+            model.addAttribute("hasErrors", fieldError.getDefaultMessage());
+            return "createFaculty";
+        }
+
         boolean facultyExist = facultyService.checkIfExist(faculty);
         if (facultyExist){
             model.addAttribute("facultyExistError", "Faculty with such title already exists");
@@ -66,10 +77,10 @@ public class FacultyController {
     }
 
     @GetMapping("/edit")
-    public String viewEditForm(HttpServletRequest req,
-                               @RequestParam("id") Faculty faculty,
+    public String viewEditForm(@RequestParam("id") Faculty faculty,
                                Model model) {
         model.addAttribute("faculty", faculty);
+        model.addAttribute("subjects", subjectService.getAllSubjects());
         return "editFaculty";
     }
 
@@ -77,11 +88,18 @@ public class FacultyController {
     public String edit(@RequestParam("id") Faculty faculty,
                        @RequestParam String title,
                        @RequestParam int placesNumberPaid,
-                       @RequestParam int placesNumberFree) {
-        faculty.setTitle(title);
-        faculty.setPlacesNumberPaid(placesNumberPaid);
-        faculty.setPlacesNumberFree(placesNumberFree);
-        facultyService.saveFaculty(faculty);
+                       @RequestParam int placesNumberFree,
+                       @RequestParam List <Subject> subjectIds,
+                       Model model) {
+        model.addAttribute("faculty", faculty);
+        facultyService.edit(faculty, title, placesNumberPaid, placesNumberFree, subjectIds);
+
+        boolean facultyExist = facultyService.checkIfExist(faculty);
+        if (facultyExist){
+            model.addAttribute("facultyExistError", "Faculty with such title already exists");
+            return "editFaculty";
+        }
+
 
         return "redirect:/faculty";
     }
@@ -93,7 +111,6 @@ public class FacultyController {
         model.addAttribute("faculty", facultyService.getById(facultyId));
         return "addSubject";
     }
-
 
     @PostMapping("/subjects")
     public String facultiesAddSubject(@RequestParam("id") int facultyId,

@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -47,6 +49,22 @@ public class FacultyService {
     public Faculty getById(int facultyId){
         LOG.trace("Getting faculty by id " + facultyId);
         return facultyRepository.getOne(facultyId);
+    }
+
+    public void edit(Faculty faculty,
+                     String title,
+                     int placesNumberPaid,
+                     int placesNumberFree,
+                     List <Subject> subjectIds){
+        faculty.setTitle(title);
+        faculty.setPlacesNumberPaid(placesNumberPaid);
+        faculty.setPlacesNumberFree(placesNumberFree);
+
+        faculty.setSubjects(new HashSet<>());
+        for (Subject subjectId : subjectIds) {
+            faculty.getSubjects().add(subjectId);
+        }
+        facultyRepository.save(faculty);
     }
 
 }
