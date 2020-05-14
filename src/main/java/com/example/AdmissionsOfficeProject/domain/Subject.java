@@ -1,6 +1,7 @@
 package com.example.AdmissionsOfficeProject.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank(message = "Title can`t be empty!")
     private String title;
 
     public Subject() {
@@ -32,7 +34,6 @@ public class Subject {
     public void setTitle(String title) {
         this.title = title;
     }
-
 
     @Override
     public String toString() {

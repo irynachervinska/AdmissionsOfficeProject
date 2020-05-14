@@ -1,16 +1,16 @@
 package com.example.AdmissionsOfficeProject.controllers;
 
-import com.example.AdmissionsOfficeProject.domain.Faculty;
 import com.example.AdmissionsOfficeProject.domain.Subject;
-import com.example.AdmissionsOfficeProject.services.FacultyService;
 import com.example.AdmissionsOfficeProject.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/subject")
@@ -27,7 +27,6 @@ public class SubjectController {
     @GetMapping
     public String viewSubjectList(Model model) {
         model.addAttribute("subjects", subjectService.getAllSubjects());
-
         return "subjects";
     }
 
@@ -38,10 +37,17 @@ public class SubjectController {
     }
 
     @PostMapping("/addSubject")
-    public String createSubject(@ModelAttribute Subject subject, Model model) {
+    public String createSubject(@ModelAttribute @Valid Subject subject,
+                                BindingResult bindingResult,
+                                Model model) {
+        if(bindingResult.hasErrors()){
+            FieldError fieldError = bindingResult.getFieldError();
+            assert fieldError != null;
+            model.addAttribute("hasErrors", fieldError.getDefaultMessage());
+            return "createSubject";
+        }
         if (subjectService.checkIfExist(subject)){
-            // TODO: 12.05.2020  
-            model.addAttribute("subjectExistError", "Subject with such title already exists");
+            model.addAttribute("subjectExistError", "Subject with such title is already exists");
             return "createSubject";
         }
 
@@ -56,8 +62,7 @@ public class SubjectController {
     }
 
     @GetMapping("/edit")
-    public String viewEditForm(HttpServletRequest req,
-                               @RequestParam("id") Subject subject,
+    public String viewEditForm(@RequestParam("id") Subject subject,
                                Model model) {
         model.addAttribute("subject", subject);
         return "editSubject";
@@ -65,7 +70,13 @@ public class SubjectController {
 
     @PostMapping("/edit")
     public String edit(@RequestParam("id") Subject subject,
-                       @RequestParam String title) {
+                       @RequestParam String title,
+                       Model model) {
+        if (subjectService.checkIfExist(subject)){
+            model.addAttribute("subjectExistError", "Subject with such title is already exists");
+            return "editSubject";
+        }
+
         subject.setTitle(title);
         subjectService.save(subject);
 
