@@ -6,6 +6,15 @@ public class UserEditDto {
     private String lastName;
     private String email;
     private int age;
+    private String userPhotoId;
+
+    public String getUserPhotoId() {
+        return userPhotoId;
+    }
+
+    public void setUserPhotoId(String userPhotoId) {
+        this.userPhotoId = userPhotoId;
+    }
 
     public String getFirstName() {
         return firstName;

@@ -16,6 +16,9 @@ public class Subject {
     @NotBlank(message = "Title can`t be empty!")
     private String title;
 
+//    @ManyToMany(mappedBy = "subjects")
+//    private Set<Faculty> faculties;
+
     public Subject() {
     }
 

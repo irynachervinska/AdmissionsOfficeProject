@@ -25,11 +25,13 @@ public class UserCabinetController {
 
     @GetMapping
     public String viewCabinet(HttpServletRequest request,
+                              UserEditDto userEditDto,
                               Model model){
         int userId = (int) request.getSession().getAttribute("userId");
         Optional<User> user = userService.findById(userId);
         user.ifPresent(
                 user1 -> model.addAttribute("user", user.get()));
+        model.addAttribute("photoId", userEditDto.getUserPhotoId());
         return "userProfile";
 
     }
@@ -52,6 +54,7 @@ public class UserCabinetController {
         user.setLastName(userEditDto.getLastName());
         user.setEmail(userEditDto.getEmail());
         user.setAge(userEditDto.getAge());
+        user.setUserPhotoId(userEditDto.getUserPhotoId());
 
         userService.saveEdits(user);
         return "redirect:/userProfile";

@@ -28,11 +28,13 @@ public class UserService {
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        EmailSendingService emailSendingService,
-                       UserPhotoFileService userPhotoFileService) {
+                       UserPhotoFileService userPhotoFileService,
+                       UserPhotoFileRepository userPhotoFileRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailSendingService = emailSendingService;
         this.userPhotoFileService = userPhotoFileService;
+        this.userPhotoFileRepository = userPhotoFileRepository;
     }
 
     public void save(UserDto userDto) {
@@ -49,18 +51,13 @@ public class UserService {
 
         user.setRole(Collections.singleton(UserRole.ROLE_ENROLLEE));
         if(user.getFirstName().equals("admin")){
-            user.setRole(new HashSet<>(Arrays.asList(UserRole.ROLE_ENROLLEE, UserRole.ROLE_ADMIN)));
+            user.setRole(Collections.singleton(UserRole.ROLE_ADMIN));
         }
 
         user.setEmailVerified(false);
 
         UUID uuid = UUID.randomUUID();
         user.setHash(uuid.toString());
-
-//        String userPhotoId = userDto.getUserPhotoId();
-//        if(!userPhotoId.isEmpty()){
-//            user.setUserPhotoId(userPhotoId);
-//        }
 
         userRepository.save(user);
         emailSendingService.sendVerificationEmail(userDto.getEmail(), uuid.toString(), userDto.getFirstName(), userDto.getLastName());

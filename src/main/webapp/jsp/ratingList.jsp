@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html xmlns:sec="http://www.springframework.org/security/tags">
+
 
 <html>
 <head>
@@ -14,7 +14,6 @@
 
 <div id='center' class="main center">
     <div class="mainInner">
-
         <table>
             <thead>
             <tr>
@@ -30,8 +29,8 @@
                 <tbody>
                 <tr>
 
-                    <td>${faculty}</td>
-                    <td>${faculty.title}</td>
+                    <td>${ratingList.id}</td>
+                    <td>${ratingList.statement.faculty.title}</td>
                     <td>
                             ${ratingList.statement.user.email} -
                             ${ratingList.statement.user.firstName} ${ratingList.statement.user.lastName}
@@ -39,12 +38,6 @@
                     <td>${ratingList.totalMark}</td>
                     <td>${ratingList.accepted}</td>
 
-                    <sec:authorize access="hasRole('ROLE_ADMIN')">
-                        <td>
-                            <a href="">Accept</a>
-                            <a href="">Reject</a>
-                        </td>
-                    </sec:authorize>
 
                 </tr>
 

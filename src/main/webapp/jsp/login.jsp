@@ -28,7 +28,7 @@
                     <div>Wrong password or username</div>
                 </c:if>
             </form>
-            <a class="flipbutton" id="loginButton" href="/new">Create my account →</a>
+            <a class="flipbutton" id="loginButton" href="${pageContext.request.contextPath}/new">Create my account →</a>
         </div>
 
     </div>

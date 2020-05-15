@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Create statement</title>
+    <title> User cabinet </title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userProfile.css">
 </head>
 <body>
@@ -15,15 +15,26 @@
     <div class="wrapper">
         <div class="profile-card js-profile-card">
             <div class="profile-card__img">
-                <img src="https://99181-282044-raikfcquaxqncofqfm.stackpathdns.com/wp-content/uploads/2016/05/icon-user-default.png"
-                     alt="profile card">
+                <c:choose>
+                    <c:when test="${user.userPhotoId ne null}">
+                        <img class="card-img-top" src="/user-photo/download/${user.userPhotoId}" alt="Card image cap">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="https://99181-282044-raikfcquaxqncofqfm.stackpathdns.com/wp-content/uploads/2016/05/icon-user-default.png"
+                             alt="profile card">
+                    </c:otherwise>
+                </c:choose>
             </div>
 
             <div class="profile-card__cnt js-profile-cnt">
                 <div class="profile-card__name"> ${user.firstName} ${user.lastName}</div>
                 <div class="profile-card__txt">
-                    <c:if test="${user.role == '[ROLE_ENROLLEE]'}"> ENROLLEE </c:if>
-                    <c:if test="${user.role == '[ROLE_ADMIN]'}"> ADMIN </c:if>
+                    <c:choose>
+                        <c:when test="${user.role == '[ROLE_ENROLLEE]'}"> ENROLLEE </c:when>
+                        <c:otherwise> ADMIN </c:otherwise>
+
+                    </c:choose>
+
                 </div>
                 <div class="profile-card-loc">
                     <span class="profile-card-loc__icon">
@@ -43,6 +54,9 @@
                         <div class="profile-card-inf__txt"> Email</div>
                     </div>
                 </div>
+
+                <input id="token" type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                 <div class="profile-card-ctr">
                     <form action="${pageContext.request.contextPath}/userProfile/edit/${user.id}">
                         <button class="profile-card__button button--blue js-message-btn">Edit profile</button>
@@ -68,6 +82,16 @@
 
 </div>
 
-</body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 
+<script src="${pageContext.request.contextPath}/js/userPhoto.js"></script>
+</body>
 </html>

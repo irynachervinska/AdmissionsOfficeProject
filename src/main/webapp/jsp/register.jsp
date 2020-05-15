@@ -33,9 +33,8 @@
                     <form:errors path="userDto.email"/>
                 </div>
 
-                <div class="${status.error ? 'has-error' : ''}">
-                    <form:input type="number" path="userDto.age" placeholder="Age"/>
-                    <form:errors path="userDto.age"/>
+                <div>
+                    <input type="number" placeholder="Age"/>
                 </div>
 
                 <div class="${status.error ? 'has-error' : ''}">
@@ -51,6 +50,7 @@
                 <button type="submit" id="register" class="button">Register me</button>
                 <div>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type="hidden" value="" class="form-control" id="photo-id" name="userPhotoId">
                 </div>
             </form>
             <a class="flipbutton" id="registerButton" href="${pageContext.request.contextPath}/login">Login to my account →</a>
