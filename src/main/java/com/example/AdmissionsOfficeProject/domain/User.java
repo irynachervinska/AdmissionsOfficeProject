@@ -33,8 +33,18 @@ public class User implements Serializable {
     @Column(name = "is_email_verified")
     private boolean isEmailVerified;
     private String hash;
+    @Column(name = "user_photo_id")
+    private String userPhotoId;
 
     public User() {
+    }
+
+    public String getUserPhotoId() {
+        return userPhotoId;
+    }
+
+    public void setUserPhotoId(String userPhotoId) {
+        this.userPhotoId = userPhotoId;
     }
 
     public String getHash() {

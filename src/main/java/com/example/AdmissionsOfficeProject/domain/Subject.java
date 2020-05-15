@@ -1,6 +1,8 @@
 package com.example.AdmissionsOfficeProject.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -10,22 +12,14 @@ public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotBlank(message = "Title can`t be empty!")
     private String title;
-    //    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
-    @ManyToMany(mappedBy = "subjects")
-    private Set<Faculty> faculties;
+
+//    @ManyToMany(mappedBy = "subjects")
+//    private Set<Faculty> faculties;
 
     public Subject() {
-    }
-
-    public Set<Faculty> getFaculties() {
-        return faculties;
-    }
-
-    public void setFaculties(Set<Faculty> faculties) {
-        this.faculties = faculties;
     }
 
     public int getId() {
@@ -44,11 +38,8 @@ public class Subject {
         this.title = title;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    @Override
+    public String toString() {
+        return title ;
+    }
 }

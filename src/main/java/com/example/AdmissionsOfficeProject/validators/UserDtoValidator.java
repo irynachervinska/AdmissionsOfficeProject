@@ -13,8 +13,12 @@ import java.util.Optional;
 @Component
 public class UserDtoValidator implements Validator {
 
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public UserDtoValidator(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -32,9 +36,6 @@ public class UserDtoValidator implements Validator {
         }
         if (userDto.getEmail().isEmpty()){
             errors.rejectValue( "email", "", "Email can`t be empty");
-        }
-        if (userDto.getAge() == 0){
-            errors.rejectValue( "age", "", "Age can`t be empty");
         }
         if (userDto.getPassword().isEmpty()){
             errors.rejectValue( "password", "", "Password can`t be empty");

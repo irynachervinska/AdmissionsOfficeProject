@@ -1,6 +1,10 @@
 package com.example.AdmissionsOfficeProject.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -10,12 +14,17 @@ public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotBlank(message = "Title can`t be empty!")
     private String title;
+
     @Column(name = "places_number_paid")
     private int placesNumberPaid;
+
     @Column(name = "places_number_free")
     private int placesNumberFree;
-    @ManyToMany(cascade = CascadeType.ALL)
+
+    @ManyToMany
     @JoinTable(name = "faculty_subject_mapping",
             joinColumns = @JoinColumn(name = "subject_id"),
             inverseJoinColumns = @JoinColumn(name = "faculty_id"))
@@ -64,12 +73,9 @@ public class Faculty {
         this.subjects = subjects;
     }
 
-    public boolean hasSubject(Subject subject) {
-        for (Subject subject1: getSubjects()) {
-            if (subject1.getId() == subject.getId()) {
-                return true;
-            }
-        }
-        return false;
+    @Override
+    public String toString() {
+        return "Faculty [Title=" + title + ", subjects=" + subjects + "]";
+
     }
 }
