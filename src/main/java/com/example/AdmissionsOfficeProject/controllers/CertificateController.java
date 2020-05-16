@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @RequestMapping("/certificate")
-// TODO: 07.05.2020 remove
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ENROLLEE')")
 @Controller
 public class CertificateController {
 
@@ -34,13 +33,14 @@ public class CertificateController {
                                       Model model) {
         int userId = (int) request.getSession().getAttribute("userId");
         model.addAttribute("userId", userId);
-        model.addAttribute("certificates", certificateService.getAll());
+        model.addAttribute("certificates", certificateService.getAllByUserId(userId));
 
         return "certificateList";
     }
 
     @GetMapping("/add")
-    public String showCreationForm(Certificate certificate, Model model) {
+    public String showCreationForm(Certificate certificate,
+                                   Model model) {
         model.addAttribute("certificate", certificate);
         model.addAttribute("subjects", subjectService.getAllSubjects());
         return "createCertificate";
@@ -51,6 +51,7 @@ public class CertificateController {
                                 @ModelAttribute Certificate certificate,
                                 @RequestParam int subjectId) {
         Subject subjectById = subjectService.getById(subjectId);
+        // TODO: 16.05.2020  
         certificate.setSubject(subjectById);
         certificateService.save(certificate);
         return "redirect:/certificate";

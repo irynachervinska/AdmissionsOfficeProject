@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class RatingListController {
 
     private FacultyService facultyService;

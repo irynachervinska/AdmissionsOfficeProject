@@ -36,12 +36,12 @@ public class FacultyController {
                                  int[] subjectIds) {
         model.addAttribute("faculties", facultyService.getAllFaculties());
         model.addAttribute("subjects", subjectService.getAllSubjects());
-        
         model.addAttribute("subjectsById", subjectService.getAllByIds(subjectIds));
 
         return "faculties";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/addFaculty")
     public String showCreationForm(Faculty faculty,
                                    Model model) {
@@ -49,6 +49,7 @@ public class FacultyController {
         return "createFaculty";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/addFaculty")
     public String save(@ModelAttribute @Valid Faculty faculty,
                        BindingResult bindingResult,
@@ -70,12 +71,14 @@ public class FacultyController {
         return "redirect:/faculty";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/delete")
     public String deleteFaculty(@RequestParam("id") Faculty faculty) {
         facultyService.deleteById(faculty.getId());
         return "redirect:/faculty";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/edit")
     public String viewEditForm(@RequestParam("id") Faculty faculty,
                                Model model) {
@@ -93,14 +96,6 @@ public class FacultyController {
                        Model model) {
         model.addAttribute("faculty", faculty);
         facultyService.edit(faculty, title, placesNumberPaid, placesNumberFree, subjectIds);
-
-        boolean facultyExist = facultyService.checkIfExist(faculty);
-        if (facultyExist){
-            model.addAttribute("facultyExistError", "Faculty with such title already exists");
-            return "editFaculty";
-        }
-
-
         return "redirect:/faculty";
     }
 
