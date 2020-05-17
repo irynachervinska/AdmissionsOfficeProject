@@ -28,9 +28,9 @@
                 <thead id="tableHeader">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Subject title</th>
+                    <th scope="col"><spring:message code="subject.title"/></th>
                     <th scope="col"></th>
-                    <th scope="col">Action</th>
+                    <th scope="col"><spring:message code="subject.action"/></th>
                 </tr>
                 </thead>
 
@@ -44,14 +44,14 @@
                     </td>
                     <td> ${hasErrors} ${subjectExistError} </td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/subject"> Back to subjects </a>
+                        <a href="${pageContext.request.contextPath}/subject"><spring:message code="subject.back"/>  </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
 
-            <button class="buttonAdd"> Create subject</button>
+            <button type="submit" class="buttonAdd"> <spring:message code="subject.create"/> </button>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
     </div>

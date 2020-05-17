@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <!-- Required meta tags -->
@@ -24,9 +25,9 @@
                 <thead id="tableHeader">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Select subject</th>
-                    <th scope="col">Put your mark </th>
-                    <th scope="col">Action</th>
+                    <th scope="col"> <spring:message code="certificate.select"/></th>
+                    <th scope="col"> <spring:message code="certificate.putmark"/>  </th>
+                    <th scope="col"> <spring:message code="action"/>Action</th>
                 </tr>
                 </thead>
 
@@ -49,49 +50,16 @@
                         </label>
                     </td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/certificate"> Back to Certificate </a>
+                        <a href="${pageContext.request.contextPath}/certificate"> <spring:message code="certificate.back"/> </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-            <button class="buttonAdd"> Save edits</button>
+            <button class="buttonAdd"> <spring:message code="saveEdits"/></button>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <input type="hidden" value="${certificate.id}" name="id">
         </form>
-
-
-
-
-
-<%--        <form action="${pageContext.request.contextPath}/certificate/edit" method="post">--%>
-
-<%--            <input type="hidden" value="${certificate.id}" name="id">--%>
-<%--            <label>--%>
-<%--                <select name="subjectId">--%>
-<%--                    <c:forEach var="subject" items="${subjects}">--%>
-<%--                    <option value=""  disabled selected hidden > ${certificate.subject.title}</option>--%>
-<%--                        <option value="${subject.id}">${subject.title}</option>--%>
-<%--                    </c:forEach>--%>
-<%--                </select>--%>
-<%--            </label>--%>
-
-<%--            <br>--%>
-<%--            <br>--%>
-
-<%--            <label>--%>
-<%--                <input type="number" placeholder="Mark" name="mark"/>--%>
-<%--            </label>--%>
-
-
-<%--            <button type="submit" class="button">Save edits</button>--%>
-<%--            <div>--%>
-<%--                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-<%--            </div>--%>
-
-<%--        </form>--%>
-
-
     </div>
 </div>
 

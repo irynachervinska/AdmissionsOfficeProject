@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
 
@@ -28,9 +29,9 @@
                 <thead id="tableHeader">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Select subject</th>
-                    <th scope="col">Put your mark </th>
-                    <th scope="col">Action</th>
+                    <th scope="col"><spring:message code="certificate.select"/></th>
+                    <th scope="col"><spring:message code="certificate.putmark"/> </th>
+                    <th scope="col"><spring:message code="action"/></th>
                 </tr>
                 </thead>
 
@@ -55,13 +56,14 @@
                         ${hasErrors}
                     </td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/certificate"> Back to subjects </a>
+                        <a href="${pageContext.request.contextPath}/certificate">
+                            <spring:message code="certificate.back"/> </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-            <button type="submit" class="buttonAdd"> Create </button>
+            <button type="submit" class="buttonAdd"> <spring:message code="certificate.create"/> </button>
         </form>
     </div>
 </div>

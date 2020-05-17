@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="script" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 <div class="flip-container">
     <div class="flipper" id="flipper">
         <div class="front">
-            <h1 class="title">Welcome!</h1>
+            <h1 class="title"><spring:message code="register.welcome"/></h1>
             <form action="${pageContext.request.contextPath}/register" modelAttribute="userDto" method="post">
 
                 <div class="${status.error ? 'has-error' : ''}">
@@ -47,13 +47,15 @@
                     <form:errors path="userDto.passwordConfirm"/>
                 </div>
 
-                <button type="submit" id="register" class="button">Register me</button>
+                <button type="submit" id="register" class="button"><spring:message code="register.register"/></button>
                 <div>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <input type="hidden" value="" class="form-control" id="photo-id" name="userPhotoId">
                 </div>
             </form>
-            <a class="flipbutton" id="registerButton" href="${pageContext.request.contextPath}/login">Login to my account →</a>
+            <a class="flipbutton" id="registerButton"
+               href="${pageContext.request.contextPath}/login">
+                <spring:message code="login.loginToAcc"/>Login to my account →</a>
         </div>
 
     </div>

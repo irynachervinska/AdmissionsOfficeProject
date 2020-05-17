@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html xmlns:sec="http://www.springframework.org/security/tags">
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <html>
 <head>
@@ -25,15 +25,15 @@
         <thead id="tableHeader">
         <tr>
             <th scope="col">#</th>
-            <th scope="col">User email</th>
-            <th scope="col">Faculty</th>
-            <th scope="col">Required subjects</th>
-            <th scope="col">Exam marks</th>
-            <th scope="col">Average certificate</th>
-            <th scope="col">Average exams</th>
-            <th scope="col">Total point</th>
-            <th scope="col">Status</th>
-            <th scope="col">Accept</th>
+            <th scope="col"> <spring:message code="statement.useremail"/></th>
+            <th scope="col"> <spring:message code="statement.faculty"/></th>
+            <th scope="col"><spring:message code="statement.subjects"/></th>
+            <th scope="col"><spring:message code="statement.marks"/></th>
+            <th scope="col"><spring:message code="statement.averCert"/></th>
+            <th scope="col"><spring:message code="statement.averEx"/></th>
+            <th scope="col"><spring:message code="statement.total"/></th>
+            <th scope="col"><spring:message code="statement.status"/></th>
+            <th scope="col"><spring:message code="action"/></th>
         </tr>
         </thead>
 
@@ -51,12 +51,12 @@
                 <td>${statement.accepted}</td>
                 <td>
                     <form action="${pageContext.request.contextPath}/statementsToAccept/accept/${statement.id}">
-                        <button type="submit" class="buttonAdd"> Accept</button>
+                        <button type="submit" class="buttonAdd"> <spring:message code="accept"/></button>
                     </form>
                     <form action="${pageContext.request.contextPath}/statementsToAccept/reject/${statement.id}"
                           method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <button type="submit" class="buttonAdd"> Reject</button>
+                        <button type="submit" class="buttonAdd"> <spring:message code="reject"/></button>
                         <input class="inputMassage" type="text" placeholder="Reject massage" name="rejectMassage"/>
                     </form>
                 </td>

@@ -13,7 +13,7 @@
 <div id='center' class="main center">
     <div class="wrapper">
         <div class="profile-card js-profile-card">
-            <form action="${pageContext.request.contextPath}/userProfile/edit/${user.id}" method="post">
+            <form action="${pageContext.request.contextPath}/userProfile/edit" method="post">
 
                 <div class="profile-card__img">
                     <img src="/user-photo/download/${user.userPhotoId}" alt="profile card" id="userPhoto">

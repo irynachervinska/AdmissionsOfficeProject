@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <!-- Required meta tags -->
@@ -23,10 +24,10 @@
             <thead id="tableHeader">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Subject</th>
-                <th scope="col">Mark</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                <th scope="col"><spring:message code="subject.title"/></th>
+                <th scope="col"><spring:message code="certificate.mark"/></th>
+                <th scope="col"><spring:message code="edit"/></th>
+                <th scope="col"><spring:message code="delete"/></th>
             </tr>
             </thead>
 
@@ -36,15 +37,15 @@
                     <td>${certificate.id}</td>
                     <td>${certificate.subject.title}</td>
                     <td>${certificate.mark}</td>
-                    <td><a href="${pageContext.request.contextPath}/certificate/edit?id=${certificate.id}">edit</a></td>
-                    <td><a href="${pageContext.request.contextPath}/certificate/delete?id=${certificate.id}">delete</a></td>
+                    <td><a href="${pageContext.request.contextPath}/certificate/edit?id=${certificate.id}"><spring:message code="edit"/></a></td>
+                    <td><a href="${pageContext.request.contextPath}/certificate/delete?id=${certificate.id}"><spring:message code="delete"/></a></td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
 
         <form action="${pageContext.request.contextPath}/certificate/add">
-            <button class="buttonAdd">Create new →</button>
+            <button class="buttonAdd"> <spring:message code="certificate.create"/></button>
         </form>
         <input type="hidden" value="${userId}" name="user">
     </div>
