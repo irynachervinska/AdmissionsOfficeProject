@@ -1,16 +1,19 @@
 package com.example.AdmissionsOfficeProject.controllers;
 
 import com.example.AdmissionsOfficeProject.domain.Certificate;
-import com.example.AdmissionsOfficeProject.domain.Subject;
 import com.example.AdmissionsOfficeProject.services.CertificateService;
 import com.example.AdmissionsOfficeProject.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 
 @RequestMapping("/certificate")
@@ -43,17 +46,28 @@ public class CertificateController {
                                    Model model) {
         model.addAttribute("certificate", certificate);
         model.addAttribute("subjects", subjectService.getAllSubjects());
+
         return "createCertificate";
     }
 
     @PostMapping("/add")
-    public String createSubject(HttpServletRequest request,
-                                @ModelAttribute Certificate certificate,
-                                @RequestParam int subjectId) {
-        Subject subjectById = subjectService.getById(subjectId);
-        // TODO: 16.05.2020  
-        certificate.setSubject(subjectById);
-        certificateService.save(certificate);
+    public String createCertificate(@ModelAttribute @Valid Certificate certificate,
+                                    BindingResult bindingResult,
+                                    RedirectAttributes attr,
+                                    @RequestParam int subjectId,
+                                    Model model) {
+        if (bindingResult.hasErrors()) {
+            FieldError fieldError = bindingResult.getFieldError();
+            assert fieldError != null;
+            model.addAttribute("hasErrors", fieldError.getDefaultMessage());
+            return "createCertificate";
+//            return "redirect:/certificate/add";
+        }
+        if (certificateService.checkIfExist(subjectId)) {
+            model.addAttribute("certExistError", "Subject with such title is already exists");
+            return "createCertificate";
+        }
+        certificateService.createNew(certificate, subjectId);
         return "redirect:/certificate";
     }
 
@@ -64,8 +78,7 @@ public class CertificateController {
     }
 
     @GetMapping("/edit")
-    public String viewEditForm(HttpServletRequest req,
-                               @RequestParam("id") Certificate certificate,
+    public String viewEditForm(@RequestParam("id") Certificate certificate,
                                Model model) {
         model.addAttribute("certificate", certificate);
         model.addAttribute("subjects", subjectService.getAllSubjects());

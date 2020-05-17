@@ -1,6 +1,9 @@
 package com.example.AdmissionsOfficeProject.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -16,6 +19,8 @@ public class Certificate {
     @OneToOne
     private Subject subject;
 
+    @Min(value = 100, message = "Mark can`t be less, than 100!")
+    @Max(value = 200, message = "Mark can`t be more, than 200!")
     private int mark;
 
     @ManyToOne
@@ -59,6 +64,6 @@ public class Certificate {
 
     @Override
     public String toString() {
-        return subject.getTitle() + "-" + mark;
+        return subject + "-" + mark + "\n";
     }
 }
