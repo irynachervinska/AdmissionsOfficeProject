@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RatingListService {
@@ -17,12 +18,15 @@ public class RatingListService {
 
     private RatingListRepository ratingListRepository;
     private StatementRepository statementRepository;
+    private MailSenderService mailSenderService;
 
     @Autowired
     public RatingListService(RatingListRepository ratingListRepository,
-                             StatementRepository statementRepository) {
+                             StatementRepository statementRepository,
+                             MailSenderService mailSenderService) {
         this.ratingListRepository = ratingListRepository;
         this.statementRepository = statementRepository;
+        this.mailSenderService = mailSenderService;
     }
 
     public List<RatingList> getAll() {
@@ -54,10 +58,35 @@ public class RatingListService {
 
     public void accept(int statementId) {
         ratingListRepository.accept(statementId);
+        sendAcceptedMail(statementId);
     }
 
-    public List<RatingList> getRatingListIn(List<Integer> statementsIds){
+    public void sendAcceptedMail(int statementId){
+        LOG.trace("Sending application acceptance message to user's email...");
+        Optional<Statement> statement = statementRepository.findById(statementId);
+        if(statement.isPresent()){
+            String subject = String.format("Information about your Statement to faculty %s", statement.get().getFaculty().getTitle());
+            String massage = String.format("Hello, %s %s! \n" +
+                            "Your Statement was accepted by admin for faculty %s. Congratulations! \n" +
+                            "Now you are participating in the competition. In your account or on the tab \"Faculties\" you can track your rating.",
+                    statement.get().getUser().getFirstName(),
+                    statement.get().getUser().getLastName(),
+                    statement.get().getFaculty().getTitle());
+            mailSenderService.send(statement.get().getUser().getEmail(), subject, massage);
+        }
+    }
+
+    public void reject(int statementId) {
+//        ratingListRepository.reject(statementId);
+        ratingListRepository.deleteByStatementId(statementId);
+    }
+
+    public List<RatingList> getRatingListIn(List<Integer> statementsIds) {
         return ratingListRepository.getRatingListByStatement(statementsIds);
+    }
+
+    public List<RatingList> getAllByAcceptedFalse() {
+        return ratingListRepository.getAllByAcceptedFalse();
     }
 
 
