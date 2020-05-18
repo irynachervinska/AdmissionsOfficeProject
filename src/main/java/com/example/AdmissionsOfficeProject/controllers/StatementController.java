@@ -18,8 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/statement")
-// TODO: 06.05.2020 remove
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ENROLLEE')")
 public class StatementController {
 
     private StatementService statementService;

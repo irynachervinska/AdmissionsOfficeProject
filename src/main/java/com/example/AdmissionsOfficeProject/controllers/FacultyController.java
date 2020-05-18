@@ -12,14 +12,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.List;
 
 @Controller
 @RequestMapping("/faculty")
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class FacultyController {
 
     private FacultyService facultyService;
