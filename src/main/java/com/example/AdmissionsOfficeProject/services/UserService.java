@@ -21,25 +21,22 @@ public class UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private EmailSendingService emailSendingService;
-    private UserPhotoFileService userPhotoFileService;
-    private UserPhotoFileRepository userPhotoFileRepository;
 
     @Autowired
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
-                       EmailSendingService emailSendingService,
-                       UserPhotoFileService userPhotoFileService,
-                       UserPhotoFileRepository userPhotoFileRepository) {
+                       EmailSendingService emailSendingService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailSendingService = emailSendingService;
-        this.userPhotoFileService = userPhotoFileService;
-        this.userPhotoFileRepository = userPhotoFileRepository;
     }
 
     public void save(UserDto userDto) {
         LOG.trace("Creating new user...");
         User user = new User();
+
+        if (checkIfExists(user))
+            return;
 
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
@@ -87,5 +84,17 @@ public class UserService {
 
     public void saveEdits(User user){
         userRepository.save(user);
+    }
+
+    public boolean checkIfExists(User user) {
+        LOG.trace("Checking if user is already exists in DB...");
+
+        Optional<User> byEmail = userRepository.findByEmail(user.getEmail());
+
+        if (byEmail.isPresent()) {
+            LOG.warn("User with email \"" + user.getEmail() + "\"  is already exists in database...");
+            return false;
+        }
+        return true;
     }
 }
