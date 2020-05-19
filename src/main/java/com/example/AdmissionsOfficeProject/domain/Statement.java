@@ -23,7 +23,7 @@ public class Statement {
     @Column(name = "average_certificate_mark")
     private int averageCertificateMark;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "statement_examMarks_mapping",
             joinColumns = @JoinColumn(name = "certificate_id"),
             inverseJoinColumns = @JoinColumn(name = "statement_id"))
