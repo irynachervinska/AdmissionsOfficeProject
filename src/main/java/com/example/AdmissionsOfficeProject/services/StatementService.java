@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class StatementService {
@@ -92,14 +93,17 @@ public class StatementService {
         statementRepository.deleteById(id);
     }
 
-//    public List<Statement> findAllByFacultyId(int facultyId) {
-//        LOG.trace("Getting all statements by userId " + facultyId);
-//        return statementRepository.findAllByFacultyId(facultyId);
-//    }
-
     public List<Integer> getAllIdsByFacultyId (int facultyId){
         return statementRepository.getAllIds(facultyId);
     }
 
 
+    public void saveEdits(Statement statement, int facultyId, int averageCertificateMark, Set <Certificate> certificateList) {
+        Faculty faculty = facultyRepository.getOne(facultyId);
+        statement.setFaculty(faculty);
+        statement.setAverageExamMark(averageCertificateMark);
+        statement.setExamMarks(certificateList);
+
+        statementRepository.save(statement);
+    }
 }
