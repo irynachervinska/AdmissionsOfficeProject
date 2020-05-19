@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByHash(String hash);
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Transactional
     @Query("update User u set u.isEmailVerified=true where u.id = :userId")
     void isConfirmEmail(@Param("userId") int userId);
