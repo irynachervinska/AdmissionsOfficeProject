@@ -36,12 +36,9 @@
 
         <sec:authorize access="hasRole('ROLE_ADMIN')">
             <li><a href="${pageContext.request.contextPath}/userProfile"><spring:message code="profile"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/subject"><spring:message
-                    code="manipulating-the-subjects"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/faculty"><spring:message
-                    code="manipulating-the-faculties"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/statementsToAccept"><spring:message
-                    code="statements-to-accept"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/subject"><spring:message code="manipulating-the-subjects"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/faculty"><spring:message code="manipulating-the-faculties"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/statementsToAccept"><spring:message code="statements-to-accept"/></a></li>
         </sec:authorize>
 
         <sec:authorize access="hasRole('ROLE_ENROLLEE')">

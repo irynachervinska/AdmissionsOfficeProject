@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="xlink" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -16,8 +18,10 @@
         <div class="profile-card js-profile-card">
             <div class="profile-card__img">
                 <c:choose>
-                    <c:when test="${user.userPhotoId ne null}">
-                        <img class="card-img-top" src="/user-photo/download/${user.userPhotoId}" alt="Card image cap">
+                    <c:when test="${user.photo ne null}">
+                        <div>
+                            <img class="d-block w-100" src="data:image/png;base64, ${user.photo.photo}" alt="userPhoto">
+                        </div>
                     </c:when>
                     <c:otherwise>
                         <img src="https://99181-282044-raikfcquaxqncofqfm.stackpathdns.com/wp-content/uploads/2016/05/icon-user-default.png"
@@ -61,8 +65,20 @@
                     <form action="${pageContext.request.contextPath}/userProfile/edit/${user.id}">
                         <button class="profile-card__button button--blue js-message-btn">Edit profile</button>
                     </form>
-                    <button class="profile-card__button button--orange">Two</button>
-                    <button class="profile-card__button button--orange">Three</button>
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <form action="${pageContext.request.contextPath}/statementsToAccept">
+                        <button class="profile-card__button button--orange">
+                            Statements</button>
+                    </form>
+                    </sec:authorize>
+
+                    <sec:authorize access="hasRole('ROLE_ENROLLEE')">
+                        <form action="${pageContext.request.contextPath}/statement">
+                            <button class="profile-card__button button--orange">
+                                Statements</button>
+                        </form>
+                    </sec:authorize>
+
                 </div>
             </div>
         </div>
@@ -92,6 +108,5 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 
-<script src="${pageContext.request.contextPath}/js/userPhoto.js"></script>
 </body>
 </html>

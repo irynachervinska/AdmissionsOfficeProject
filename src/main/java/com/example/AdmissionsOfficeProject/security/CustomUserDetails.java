@@ -26,7 +26,6 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
     }
 
-    // TODO: 30.04.2020
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String role = StringUtils.collectionToCommaDelimitedString(user.getRole());
