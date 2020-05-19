@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -16,9 +17,9 @@
 <body class="login-form">
 
 <div class="login-form">
-    <h1 class="text-center"> You are not authorized to access this page! </h1>
+    <h1 class="text-center"> <spring:message code="not"/></h1>
     <form action="${pageContext.request.contextPath}/logout" method="post">
-        <input type="submit" class="button red big" value="Enter with another username" />
+        <input type="submit" class="button red big" value="<spring:message code="another"/>" />
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </form>
 </div>

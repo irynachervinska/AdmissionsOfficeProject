@@ -1,10 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/sql" %>
-
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<html>
 <head>
 
     <!-- Required meta tags -->
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -20,17 +21,17 @@
     <div class="mainInner">
         <form action="${pageContext.request.contextPath}/faculty/subjects?id=${faculty.id}" method="post">
 
-            <h2>Adding subjects to faculty</h2>
+            <h2><spring:message code="subject.add"/></h2>
             <div id="info">
-                <h4>Faculty info</h4>
-                Faculty : <b>${faculty.title}</b> <br/>
-                Number of paid places: <b>${faculty.placesNumberPaid}</b><br/>
-                Number of free places: <b>${faculty.placesNumberFree}</b><br/>
+                <h4><spring:message code="subject.facultyinfo"/></h4>
+                <spring:message code="subject.faculty"/> <b>${faculty.title}</b> <br/>
+                <spring:message code="subject.paid"/> <b>${faculty.placesNumberPaid}</b><br/>
+                <spring:message code="subject.free"/><b>${faculty.placesNumberFree}</b><br/>
             </div>
 
             <br>
             <div class="form-group">
-                <label for="exampleFormControlSelect2">Select 3 subjects for faculty: </label>
+                <label for="exampleFormControlSelect2"> <spring:message code="subject.selectthree"/> </label>
                 <select name="subjectIds" multiple class="form-control" id="exampleFormControlSelect2">
                     <option value="" disabled selected hidden> Select subject</option>
                     <c:forEach var="subject" items="${subjects}">
@@ -38,45 +39,13 @@
                     </c:forEach>
                 </select>
             </div>
-            <button type="submit" class="buttonAdd">Add subjects</button>
+            <button type="submit" class="buttonAdd"> <spring:message code="subject.addSubject"/></button>
             <div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </div>
         </form>
     </div>
 </div>
-
-
-<%--<form action="${pageContext.request.contextPath}/faculty/subjects?id=${faculty.id}" method="post">--%>
-<%--    <div class="col-md-4">--%>
-<%--        <div>--%>
-<%--            <div>Faculty info</div>--%>
-<%--            <div>--%>
-<%--                Title: <b>${faculty.title}</b> <br/>--%>
-<%--                placesNumberPaid: <b>${faculty.placesNumberPaid}</b><br/>--%>
-<%--                placesNumberFree: <b>${faculty.placesNumberFree}</b><br/>--%>
-<%--                <br/>--%>
-<%--                Subjects:--%>
-<%--                <br/>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div>--%>
-
-<%--            <label>--%>
-<%--                <select name="subjectIds" multiple>--%>
-<%--                    <option value="" disabled selected hidden> Select subject</option>--%>
-<%--                    <c:forEach var="subject" items="${subjects}">--%>
-<%--                        <option value="${subject.id}">${subject.title}</option>--%>
-<%--                    </c:forEach>--%>
-<%--                </select>--%>
-<%--            </label>--%>
-
-<%--            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-<%--        </div>--%>
-<%--        <input type="submit" value="Add subjects"/>--%>
-<%--    </div>--%>
-<%--</form>--%>
-
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

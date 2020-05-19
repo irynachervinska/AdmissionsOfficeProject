@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "rating_list")
-public class RatingList{
+public class RatingList {
 
     @Id
     @GeneratedValue
@@ -20,8 +20,18 @@ public class RatingList{
     @MapsId
     private Statement statement;
     private boolean accepted;
+    @Column(name = "reject_massage")
+    private String rejectMassage;
 
     public RatingList() {
+    }
+
+    public String getRejectMassage() {
+        return rejectMassage;
+    }
+
+    public void setRejectMassage(String rejectMassage) {
+        this.rejectMassage = rejectMassage;
     }
 
     public int getId() {

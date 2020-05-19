@@ -18,8 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/statement")
-// TODO: 06.05.2020 remove
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ENROLLEE')")
 public class StatementController {
 
     private StatementService statementService;
@@ -42,7 +41,7 @@ public class StatementController {
     }
 
     @GetMapping
-    public String viewApplicationList(Model model,
+    public String viewCreationForm(Model model,
                                       HttpServletRequest request) {
         int userId = (int) request.getSession().getAttribute("userId");
         List<Statement> statementsByUserId = statementService.getAllByUserId(userId);
@@ -53,7 +52,6 @@ public class StatementController {
         if (statementsByUserId.size() >= 3) {
             model.addAttribute("errorMassage", "More than 3 statements");
         }
-
         return "statementList";
     }
 

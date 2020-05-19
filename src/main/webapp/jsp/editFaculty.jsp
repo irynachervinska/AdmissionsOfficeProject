@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
 
@@ -27,10 +28,10 @@
                 <thead id="tableHeader">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Faculty title</th>
-                    <th scope="col">Number of paid places</th>
-                    <th scope="col">Number of free places</th>
-                    <th scope="col">Required subjects</th>
+                    <th scope="col"><spring:message code="faculty.title"/></th>
+                    <th scope="col"><spring:message code="subject.paid"/></th>
+                    <th scope="col"><spring:message code="subject.free"/></th>
+                    <th scope="col"><spring:message code="faculty.subjects"/></th>
                 </tr>
                 </thead>
 
@@ -41,7 +42,6 @@
                         <td>
                             <input type="hidden" value="${faculty.id}" name="id">
                             <input type="text" placeholder="Title" value="${faculty.title}" name="title"/>
-                            ${facultyExistError}
                         </td>
                         <td>
                             <input type="text" placeholder="Number of paid places" name="placesNumberPaid" value="${faculty.placesNumberPaid}"/>
@@ -61,35 +61,11 @@
                 </tbody>
             </table>
 
-            <button type="submit" class="buttonAdd">Save edits</button>
+            <button type="submit" class="buttonAdd"> <spring:message code="faculty.saveedits"/></button>
             <div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </div>
         </form>
-
-
-<%--                <div class="flipperLogin" id="flipper">--%>
-
-<%--                    <div class="front">--%>
-
-<%--                        <form action="${pageContext.request.contextPath}/faculty/edit" method="post">--%>
-
-<%--                            <input type="hidden" value="${faculty.id}" name="id">--%>
-<%--                            <input type="text" placeholder="Title" value="${faculty.title}"/>--%>
-<%--                            <input type="text" placeholder="Number of paid places" value="${faculty.placesNumberPaid}"/>--%>
-<%--                            <input type="text" placeholder="Number of free places" value="${faculty.placesNumberFree}"/>--%>
-
-<%--                            <button type="submit" class="button">Save edits</button>--%>
-<%--                            <div>--%>
-<%--                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-<%--                            </div>--%>
-
-<%--                        </form>--%>
-<%--                    </div>--%>
-
-<%--                </div>--%>
-
-
     </div>
 </div>
 <!-- Optional JavaScript -->

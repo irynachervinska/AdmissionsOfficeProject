@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,7 +32,6 @@ public class UserCabinetController {
         Optional<User> user = userService.findById(userId);
         user.ifPresent(
                 user1 -> model.addAttribute("user", user.get()));
-        model.addAttribute("photoId", userEditDto.getUserPhotoId());
         return "userProfile";
 
     }
@@ -49,14 +49,9 @@ public class UserCabinetController {
 
     @PostMapping("/edit")
     public String userEdit(@RequestParam ("userId") User user,
-                           @ModelAttribute UserEditDto userEditDto){
-        user.setFirstName(userEditDto.getFirstName());
-        user.setLastName(userEditDto.getLastName());
-        user.setEmail(userEditDto.getEmail());
-        user.setAge(userEditDto.getAge());
-        user.setUserPhotoId(userEditDto.getUserPhotoId());
-
-        userService.saveEdits(user);
+                           @ModelAttribute UserEditDto userEditDto,
+                           @RequestParam MultipartFile photo){
+        userService.saveEdits(user, userEditDto, photo);
         return "redirect:/userProfile";
     }
 

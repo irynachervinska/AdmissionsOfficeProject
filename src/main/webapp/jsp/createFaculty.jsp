@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
 
@@ -22,7 +23,7 @@
     <div class="mainInner">
 
         <form action="${pageContext.request.contextPath}/faculty/addFaculty" method="post">
-            <h2>Creating new faculty</h2>
+            <h2><spring:message code="faculty.creating"/></h2>
 
             <div class="centerDiv">
                 <input type="text" class="form-control" placeholder="Title" name="title"/>
@@ -33,7 +34,7 @@
                 ${hasErrors} ${facultyExistError}
             </h5>
 
-            <button type="submit" class="buttonAdd">Create faculty</button>
+            <button type="submit" class="buttonAdd"><spring:message code="faculty.create"/> </button>
             <div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </div>

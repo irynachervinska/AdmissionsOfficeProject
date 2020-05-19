@@ -14,17 +14,18 @@
     <div class="flipper" id="flipper">
 
         <div class="front">
-            <h1 class="title"> It won`t be long </h1>
+            <h1 class="title"> <spring:message code="confirm.long"/> </h1>
 
             <div>
-                Please check your mailbox and follow confirmation instructions.
+                <spring:message code="confirm.please"/>
                 <br>
                 <br>
-                If you do not receive a letter within a few minutes, please ensure that yout mail server did not classify the e-mail as spam and therefore automatically put the email in a separate folder.
+                <spring:message code="confirm.donthave"/>
             </div>
-            <a class="flipbutton" id="loginButton" href="/new">Create my account →</a>
             <br>
-            <a class="flipbutton"href="/home">Back to Home page →</a>
+            <a class="flipbutton" id="loginButton" href="${pageContext.request.contextPath}/new"> <spring:message code="confirm.create"/></a>
+            <br>
+            <a class="flipbutton" href="${pageContext.request.contextPath}/"> <spring:message code="confirm.home"/></a>
         </div>
 
     </div>

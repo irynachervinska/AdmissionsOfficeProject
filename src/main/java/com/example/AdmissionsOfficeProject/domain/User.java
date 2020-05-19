@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,18 +34,25 @@ public class User implements Serializable {
     @Column(name = "is_email_verified")
     private boolean isEmailVerified;
     private String hash;
-    @Column(name = "user_photo_id")
-    private String userPhotoId;
+    @OneToOne(mappedBy = "user")
+    private UserPhoto photo;
 
     public User() {
     }
 
-    public String getUserPhotoId() {
-        return userPhotoId;
+    public User(String firstName, String lastName, String email, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.age = age;
     }
 
-    public void setUserPhotoId(String userPhotoId) {
-        this.userPhotoId = userPhotoId;
+    public UserPhoto getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(UserPhoto photo) {
+        this.photo = photo;
     }
 
     public String getHash() {

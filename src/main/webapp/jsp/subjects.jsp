@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
 
@@ -24,8 +25,8 @@
             <thead  id="tableHeader">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Subject title</th>
-                <th scope="col">Action</th>
+                <th scope="col"> <spring:message code="subject.title"/></th>
+                <th scope="col"> <spring:message code="subject.action"/></th>
             </tr>
             </thead>
 
@@ -34,14 +35,15 @@
             <tr>
                 <th scope="row">${subject.id}</th>
                 <td>${subject.title}</td>
-                <td><a href="${pageContext.request.contextPath}/subject/edit?id=${subject.id}"> Edit </a> </td>
+                <td><a href="${pageContext.request.contextPath}/subject/edit?id=${subject.id}">
+                    <spring:message code="subject.edit"/> </a> </td>
             </tr>
             </c:forEach>
             </tbody>
         </table>
 
         <form action="${pageContext.request.contextPath}/subject/addSubject">
-            <button class="buttonAdd">Create new →</button>
+            <button class="buttonAdd"> <spring:message code="subject.new"/></button>
         </form>
 
 

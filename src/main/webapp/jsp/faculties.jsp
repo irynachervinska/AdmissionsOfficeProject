@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <html>
 <head>
@@ -27,15 +28,15 @@
             <thead id="tableHeader">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Faculty title</th>
-                <th scope="col">Number of paid places</th>
-                <th scope="col">Number of free places</th>
-                <th scope="col">Required subjects</th>
-                <th scope="col">Rating list</th>
+                <th scope="col"><spring:message code="faculty.title"/></th>
+                <th scope="col"><spring:message code="subject.paid"/></th>
+                <th scope="col"><spring:message code="subject.free"/></th>
+                <th scope="col"><spring:message code="faculty.subjects"/></th>
+                <th scope="col"><spring:message code="faculty.rating"/></th>
 
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    <th scope="col">Action</th>
-                    <th scope="col">Add subjects</th>
+                    <th scope="col"> <spring:message code="faculty.action"/></th>
+                    <th scope="col"> <spring:message code="faculty.addsubjects"/></th>
                 </sec:authorize>
             </tr>
             </thead>
@@ -53,16 +54,16 @@
                         </c:forEach>
                     </td>
                     <td>
-                        <a href="faculty/ratingList/${faculty.id}">View rating list by this faculty</a>
+                        <a href="faculty/ratingList/${faculty.id}"> <spring:message code="faculty.viewRating"/></a>
                     </td>
 
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
                         <td>
-                            <a href="${pageContext.request.contextPath}/faculty/edit?id=${faculty.id}"> Edit </a> <br>
-                            <a href="${pageContext.request.contextPath}/faculty/delete?id=${faculty.id}"> Delete </a>
+                            <a href="${pageContext.request.contextPath}/faculty/edit?id=${faculty.id}"> <spring:message code="edit"/> </a> <br>
+                            <a href="${pageContext.request.contextPath}/faculty/delete?id=${faculty.id}"> <spring:message code="delete"/>  </a>
                         </td>
                         <td>
-                            <a href="/faculty/addSubjects/subjects/${faculty.id}">Add subjects</a>
+                            <a href="/faculty/addSubjects/subjects/${faculty.id}"> <spring:message code="faculty.addsubjects"/></a>
                         </td>
                     </sec:authorize>
                 </tr>
@@ -72,54 +73,9 @@
 
         <sec:authorize access="hasRole('ROLE_ADMIN')">
             <form action="${pageContext.request.contextPath}/faculty/addFaculty">
-                <button class="buttonAdd">Create new →</button>
+                <button class="buttonAdd"> <spring:message code="faculty.create"/></button>
             </form>
         </sec:authorize>
-
-
-        <%--        <table>--%>
-        <%--            <thead>--%>
-        <%--            <tr>--%>
-        <%--                <th>Id</th>--%>
-        <%--                <th>Faculty title</th>--%>
-        <%--                <th>Number of paid places</th>--%>
-        <%--                <th>Number of free places</th>--%>
-        <%--                <th>Required subjects</th>--%>
-        <%--                <th>Edit</th>--%>
-        <%--                <th>Delete</th>--%>
-        <%--                <th>Add subjects</th>--%>
-        <%--            </tr>--%>
-        <%--            </thead>--%>
-
-        <%--            <tbody>--%>
-        <%--            <c:forEach var="faculty" items="${faculties}">--%>
-        <%--                <tr>--%>
-        <%--                    <td>${faculty.id}</td>--%>
-        <%--                    <td>${faculty.title}</td>--%>
-        <%--                    <td>${faculty.placesNumberPaid}</td>--%>
-        <%--                    <td>${faculty.placesNumberFree}</td>--%>
-        <%--                    <td>--%>
-
-        <%--                        <c:forEach var="subject" items="${faculty.subjects}">--%>
-        <%--                            ${subject.title}--%>
-        <%--                        </c:forEach>--%>
-
-        <%--                    </td>--%>
-        <%--                    <td><a href="${pageContext.request.contextPath}/faculty/edit?id=${faculty.id}">edit</a></td>--%>
-        <%--                    <td><a href="${pageContext.request.contextPath}/faculty/delete?id=${faculty.id}">delete</a></td>--%>
-        <%--                    <td>--%>
-
-        <%--                        <a href="/faculty/addSubjects/subjects/${faculty.id}">Add subjects</a> <br>--%>
-        <%--                        <a href="faculty/ratingList/${faculty.id}">View rating list by this faculty</a>--%>
-        <%--                    </td>--%>
-        <%--                </tr>--%>
-        <%--            </c:forEach>--%>
-        <%--            </tbody>--%>
-        <%--        </table>--%>
-
-        <%--        <a href="${pageContext.request.contextPath}/faculty/addFaculty">Create new →</a>--%>
-
-
     </div>
 </div>
 
