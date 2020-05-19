@@ -1,5 +1,6 @@
 package com.example.AdmissionsOfficeProject;
 
+import com.example.AdmissionsOfficeProject.daos.UserPhotoRepository;
 import com.example.AdmissionsOfficeProject.daos.UserRepository;
 import com.example.AdmissionsOfficeProject.domain.User;
 import com.example.AdmissionsOfficeProject.domain.UserRole;
@@ -44,6 +45,9 @@ public class UserServiceTest {
     @Mock
     private EmailSendingService emailSendingService;
 
+    @Mock
+    private UserPhotoRepository userPhotoRepository;
+
     @Captor
     private ArgumentCaptor<User> userCaptor;
 
@@ -51,7 +55,7 @@ public class UserServiceTest {
 
     @Before
     public void setUp() {
-        userService = new UserService(userRepository, passwordEncoder, emailSendingService);
+        userService = new UserService(userRepository, passwordEncoder, emailSendingService, userPhotoRepository);
     }
 
     @Test
