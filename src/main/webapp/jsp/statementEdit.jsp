@@ -33,43 +33,43 @@
                 </thead>
 
                 <tbody>
-                <c:forEach var="statement" items="${statements}">
-                    <tr>
-                        <td>#
-                            <input type="hidden" value="${statement.id}" name="id">
-                        </td>
-                        <td>${sessionScope.user.get().email} </td>
-                        <td>
-                            <label for="exampleFormControlSelect2"> </label>
-                            <select name="facultyId" class="form-control" id="exampleFormControlSelect2">
-                                <option value="" disabled selected hidden><spring:message code="statement.select"/></option>
-                                <c:forEach items="${faculties}" var="faculty">
-                                    <option value="${faculty.id}">${faculty.title}</option>
-                                </c:forEach>
-                            </select>
-                        </td>
-                        <td>
-                            <input type="number" id="averCert" name="averageCertificateMark" value="averageCertificateMark"
-                                   placeholder="Average Certificate Mark">
-                        </td>
-                        <td>
-                            <select name="certificateList" multiple class="form-control">
-                                <option value="" disabled selected hidden>
-                                    <spring:message code="statement.selectCert"/></option>
-                                <c:forEach items="${certificates}" var="certificate">
-                                    <option value="${certificate.id}">${certificate.subject.title}
-                                        - ${certificate.mark}</option>
-                                </c:forEach>
-                            </select>
-                        </td>
-                    </tr>
-                </c:forEach>
+
+                <tr>
+                    <td>#
+                        <input type="hidden" value="${statement.id}" name="id">
+                    </td>
+                    <td>${sessionScope.user.get().email} </td>
+                    <td>
+                        <label for="exampleFormControlSelect2"> </label>
+                        <select name="facultyId" class="form-control" id="exampleFormControlSelect2">
+                            <option value="" disabled selected hidden><spring:message code="statement.select"/></option>
+                            <c:forEach items="${faculties}" var="faculty">
+                                <option value="${faculty.id}">${faculty.title}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" id="averCert" name="averageCertificateMark" value="averageCertificateMark"
+                               placeholder="Average Certificate Mark">
+                    </td>
+                    <td>
+                        <select name="certificateList" multiple class="form-control">
+                            <option value="" disabled selected hidden>
+                                <spring:message code="statement.selectCert"/></option>
+                            <c:forEach items="${certificates}" var="certificate">
+                                <option value="${certificate.id}">${certificate.subject.title}
+                                    - ${certificate.mark}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+
                 </tbody>
             </table>
 
             <button type="submit" class="buttonAdd"><spring:message code="saveEdits"/></button>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <input type="hidden" value="${certificate.id}" name="id">
+            <input type="hidden" value="${statement.id}" name="id">
         </form>
     </div>
 </div>

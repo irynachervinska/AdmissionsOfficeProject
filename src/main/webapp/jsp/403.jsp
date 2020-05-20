@@ -1,27 +1,33 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Error 403</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
 </head>
-<body class="login-form">
 
-<div class="login-form">
-    <h1 class="text-center"> <spring:message code="not"/></h1>
-    <form action="${pageContext.request.contextPath}/logout" method="post">
-        <input type="submit" class="button red big" value="<spring:message code="another"/>" />
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    </form>
+<body class="login-form">
+<div class="flip-container">
+    <div class="flipperLogin" id="flipper">
+
+        <div class="front">
+            <h1 class="title"> Oops! </h1>
+            <p class="not"><spring:message code="not"/></p>
+            <form action="${pageContext.request.contextPath}/logout" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+            <form action="${pageContext.request.contextPath}/login">
+                <input type="submit" class="anotherName" value="<spring:message code="another"/>"/>
+            </form>
+            <form action="${pageContext.request.contextPath}/">
+                <input type="submit" class="anotherName" value="<spring:message code="confirm.home"/>"/>
+            </form>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>

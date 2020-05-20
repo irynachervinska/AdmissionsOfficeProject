@@ -38,9 +38,9 @@ public class SubjectService {
         subjectRepository.deleteById(id);
     }
 
-    public boolean checkIfExist(Subject subject){
+    public boolean checkIfExist(String title){
         LOG.trace("Checking if subject exists in DB...");
-        Optional<Subject> subjectByTitle = subjectRepository.findByTitle(subject.getTitle());
+        Optional<Subject> subjectByTitle = subjectRepository.findByTitle(title);
         return subjectByTitle.isPresent();
     }
 

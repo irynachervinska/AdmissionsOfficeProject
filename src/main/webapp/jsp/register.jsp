@@ -55,7 +55,7 @@
             </form>
             <a class="flipbutton" id="registerButton"
                href="${pageContext.request.contextPath}/login">
-                <spring:message code="login.loginToAcc"/>Login to my account →</a>
+                <spring:message code="login.loginToAcc"/></a>
         </div>
 
     </div>

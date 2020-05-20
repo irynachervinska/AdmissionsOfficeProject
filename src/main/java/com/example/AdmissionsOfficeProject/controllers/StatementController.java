@@ -43,7 +43,7 @@ public class StatementController {
 
     @GetMapping
     public String viewCreationForm(Model model,
-                                      HttpServletRequest request) {
+                                   HttpServletRequest request) {
         int userId = (int) request.getSession().getAttribute("userId");
         List<Statement> statementsByUserId = statementService.getAllByUserId(userId);
 
@@ -56,10 +56,14 @@ public class StatementController {
     }
 
     @GetMapping("/create")
-    public String viewCreationForm(Model model) {
+    public String viewCreationForm(HttpServletRequest request,
+                                   Model model) {
+        int userId = (int) request.getSession().getAttribute("userId");
+        model.addAttribute("userId", userId);
+
         model.addAttribute("faculties", facultyService.getAllFaculties());
         model.addAttribute("subjects", subjectService.getAllSubjects());
-        model.addAttribute("certificates", certificateService.getAll());
+        model.addAttribute("certificates", certificateService.getAllByUserId(userId));
 
         return "statementCreation";
     }
@@ -72,7 +76,7 @@ public class StatementController {
                                   @RequestParam int userId,
                                   @RequestParam List<Certificate> certificateIds,
                                   Model model) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
             assert fieldError != null;
             model.addAttribute("hasErrors", fieldError.getDefaultMessage());
@@ -80,7 +84,7 @@ public class StatementController {
         }
 
         boolean checkIfExist = statementService.checkIfExist(facultyId, userId);
-        if (checkIfExist){
+        if (checkIfExist) {
             model.addAttribute("statementExistError", "Statement for this faculty is already exists");
             return "statementCreation";
         }
@@ -96,10 +100,12 @@ public class StatementController {
 
     @GetMapping("/edit")
     public String viewEditForm(@RequestParam("id") Statement statement,
+                               HttpServletRequest request,
                                Model model) {
-        model.addAttribute("statements", statementService.findAll());
+        int userId = (int) request.getSession().getAttribute("userId");
+        model.addAttribute("statement", statement);
         model.addAttribute("faculties", facultyService.getAllFaculties());
-        model.addAttribute("certificates", certificateService.getAll());
+        model.addAttribute("certificates", certificateService.getAllByUserId(userId));
         return "statementEdit";
     }
 
@@ -107,8 +113,7 @@ public class StatementController {
     public String edit(@RequestParam("id") Statement statement,
                        @RequestParam int facultyId,
                        @RequestParam int averageCertificateMark,
-                       @RequestParam Set<Certificate> certificateList,
-                       Model model){
+                       @RequestParam Set<Certificate> certificateList) {
         statementService.saveEdits(statement, facultyId, averageCertificateMark, certificateList);
         return "redirect:/statement";
     }

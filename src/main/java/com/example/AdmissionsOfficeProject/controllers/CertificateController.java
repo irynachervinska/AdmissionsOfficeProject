@@ -53,20 +53,21 @@ public class CertificateController {
     @PostMapping("/add")
     public String createCertificate(@ModelAttribute @Valid Certificate certificate,
                                     BindingResult bindingResult,
-                                    RedirectAttributes attr,
                                     @RequestParam int subjectId,
+                                    HttpServletRequest request,
                                     Model model) {
+        int userId = (int) request.getSession().getAttribute("userId");
         if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
             assert fieldError != null;
             model.addAttribute("hasErrors", fieldError.getDefaultMessage());
             return "createCertificate";
-//            return "redirect:/certificate/add";
         }
-        if (certificateService.checkIfExist(subjectId)) {
+        if (certificateService.checkIfExist(subjectId, userId)) {
             model.addAttribute("certExistError", "Subject with such title is already exists");
             return "createCertificate";
         }
+
         certificateService.createNew(certificate, subjectId);
         return "redirect:/certificate";
     }

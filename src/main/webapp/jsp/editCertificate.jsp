@@ -25,9 +25,9 @@
                 <thead id="tableHeader">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col"> <spring:message code="certificate.select"/></th>
-                    <th scope="col"> <spring:message code="certificate.putmark"/>  </th>
-                    <th scope="col"> <spring:message code="action"/>Action</th>
+                    <th scope="col"><spring:message code="certificate.select"/></th>
+                    <th scope="col"><spring:message code="certificate.putmark"/></th>
+                    <th scope="col"><spring:message code="action"/>Action</th>
                 </tr>
                 </thead>
 
@@ -37,9 +37,9 @@
                     <td>
                         <div class="form-group">
                             <select name="subjectId" class="form-control" id="exampleFormControlSelect2">
-                                <option value="" disabled selected hidden> ${certificate.subject.title}</option>
+                                <option value="" selected> ${certificate.subject.title} </option>
                                 <c:forEach var="subject" items="${subjects}">
-                                    <option value="${subject.id}" >${subject.title}</option>
+                                    <option value="${subject.id}">${subject.title}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -50,13 +50,14 @@
                         </label>
                     </td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/certificate"> <spring:message code="certificate.back"/> </a>
+                        <a href="${pageContext.request.contextPath}/certificate"> <spring:message
+                                code="certificate.back"/> </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-            <button class="buttonAdd"> <spring:message code="saveEdits"/></button>
+            <button class="buttonAdd"><spring:message code="saveEdits"/></button>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <input type="hidden" value="${certificate.id}" name="id">
         </form>

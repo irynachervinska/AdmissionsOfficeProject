@@ -28,7 +28,7 @@ public class Certificate {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(mappedBy = "examMarks", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "examMarks", cascade = CascadeType.REMOVE)
     private Set<Statement> statements;
 
     public Certificate() {
