@@ -66,4 +66,8 @@ public class RatingList {
         this.accepted = accepted;
     }
 
+    @Override
+    public String toString() {
+        return rejectMassage;
+    }
 }

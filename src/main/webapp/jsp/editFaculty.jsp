@@ -36,9 +36,8 @@
                 </thead>
 
                 <tbody>
-
                     <tr>
-                        <th scope="row">${faculty.id}</th>
+                        <th scope="row">#</th>
                         <td>
                             <input type="hidden" value="${faculty.id}" name="id">
                             <input type="text" placeholder="Title" value="${faculty.title}" name="title"/>

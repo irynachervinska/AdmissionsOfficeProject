@@ -1,20 +1,21 @@
 package com.example.AdmissionsOfficeProject.controllers;
 
-import com.example.AdmissionsOfficeProject.domain.Certificate;
-import com.example.AdmissionsOfficeProject.domain.RatingList;
-import com.example.AdmissionsOfficeProject.domain.Statement;
+import com.example.AdmissionsOfficeProject.domain.*;
+import com.example.AdmissionsOfficeProject.dtos.UserEditDto;
 import com.example.AdmissionsOfficeProject.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/statement")
@@ -42,40 +43,51 @@ public class StatementController {
 
     @GetMapping
     public String viewCreationForm(Model model,
-                                      HttpServletRequest request) {
+                                   HttpServletRequest request) {
         int userId = (int) request.getSession().getAttribute("userId");
         List<Statement> statementsByUserId = statementService.getAllByUserId(userId);
 
         model.addAttribute("statements", statementsByUserId);
-//        model.addAttribute("certificates", certificateService.getAll());
 
         if (statementsByUserId.size() >= 3) {
-            model.addAttribute("errorMassage", "More than 3 statements");
+            model.addAttribute("errorMassage", "You can`t add more than 3 Statements");
         }
         return "statementList";
     }
 
     @GetMapping("/create")
-    public String viewCreationForm(Model model) {
+    public String viewCreationForm(HttpServletRequest request,
+                                   Model model) {
+        int userId = (int) request.getSession().getAttribute("userId");
+        model.addAttribute("userId", userId);
+
         model.addAttribute("faculties", facultyService.getAllFaculties());
         model.addAttribute("subjects", subjectService.getAllSubjects());
-        model.addAttribute("certificates", certificateService.getAll());
+        model.addAttribute("certificates", certificateService.getAllByUserId(userId));
 
         return "statementCreation";
     }
 
     @PostMapping("/create")
-    public String createStatement(Statement statement,
+    public String createStatement(@Valid Statement statement,
+                                  BindingResult bindingResult,
                                   @RequestParam int facultyId,
                                   @RequestParam int averageCertificateMark,
                                   @RequestParam int userId,
                                   @RequestParam List<Certificate> certificateIds,
                                   Model model) {
-//        boolean checkIfExist = statementService.checkIfExist(facultyId, userId);
-//        if (checkIfExist){
-//            model.addAttribute("statementExistError", "Statement for this faculty is already exists");
-//            return "statementCreation";
-//        }
+        if (bindingResult.hasErrors()) {
+            FieldError fieldError = bindingResult.getFieldError();
+            assert fieldError != null;
+            model.addAttribute("hasErrors", fieldError.getDefaultMessage());
+            return "statementCreation";
+        }
+
+        boolean checkIfExist = statementService.checkIfExist(facultyId, userId);
+        if (checkIfExist) {
+            model.addAttribute("statementExistError", "Statement for this faculty is already exists");
+            return "statementCreation";
+        }
         statementService.save(statement, facultyId, averageCertificateMark, userId, certificateIds);
         return "redirect:/statement";
     }
@@ -83,6 +95,26 @@ public class StatementController {
     @GetMapping("/delete")
     public String deleteStatement(@RequestParam("id") Statement statement) {
         statementService.deleteById(statement.getId());
+        return "redirect:/statement";
+    }
+
+    @GetMapping("/edit")
+    public String viewEditForm(@RequestParam("id") Statement statement,
+                               HttpServletRequest request,
+                               Model model) {
+        int userId = (int) request.getSession().getAttribute("userId");
+        model.addAttribute("statement", statement);
+        model.addAttribute("faculties", facultyService.getAllFaculties());
+        model.addAttribute("certificates", certificateService.getAllByUserId(userId));
+        return "statementEdit";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@RequestParam("id") Statement statement,
+                       @RequestParam int facultyId,
+                       @RequestParam int averageCertificateMark,
+                       @RequestParam Set<Certificate> certificateList) {
+        statementService.saveEdits(statement, facultyId, averageCertificateMark, certificateList);
         return "redirect:/statement";
     }
 

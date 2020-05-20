@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "certificates")
@@ -26,6 +27,9 @@ public class Certificate {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany(mappedBy = "examMarks", cascade = CascadeType.REMOVE)
+    private Set<Statement> statements;
 
     public Certificate() {
     }

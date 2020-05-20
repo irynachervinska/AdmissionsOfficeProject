@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -46,7 +47,7 @@ public class SubjectController {
             model.addAttribute("hasErrors", fieldError.getDefaultMessage());
             return "createSubject";
         }
-        if (subjectService.checkIfExist(subject)){
+        if (subjectService.checkIfExist(subject.getTitle())){
             model.addAttribute("subjectExistError", "Subject with such title is already exists");
             return "createSubject";
         }
@@ -72,7 +73,7 @@ public class SubjectController {
     public String edit(@RequestParam("id") Subject subject,
                        @RequestParam String title,
                        Model model) {
-        if (subjectService.checkIfExist(subject)){
+        if (subjectService.checkIfExist(title)){
             model.addAttribute("subjectExistError", "Subject with such title is already exists");
             return "editSubject";
         }

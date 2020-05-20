@@ -45,6 +45,7 @@ public class RatingListService {
         ratingList.setStatement(statement);
         int averageExamMark = statement.getAverageExamMark();
         int averageCertificateMark = statement.getAverageCertificateMark();
+
         ratingList.setTotalMark(averageCertificateMark + averageExamMark);
         ratingList.setId(statement.getId());
 

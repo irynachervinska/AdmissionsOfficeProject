@@ -42,8 +42,8 @@ public class UserService {
         LOG.trace("Creating new user...");
         User user = new User();
 
-        if (checkIfExists(user))
-            return;
+//        if (checkIfExists(user))
+//            return;
 
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
@@ -91,13 +91,6 @@ public class UserService {
         user.setEmail(userEditDto.getEmail());
         user.setAge(userEditDto.getAge());
         userRepository.save(user);
-
-//        List<UserPhoto> userPhotos = Arrays.stream(photos)
-//                .map(this::mapToBytes)
-//                .filter(bytes -> bytes.length > 0)
-//                .map(bytes -> Base64.getEncoder().encodeToString(bytes))
-//                .map(encodedString -> new UserPhoto(encodedString, user))
-//                .collect(Collectors.toList());
 
         byte[] bytes = mapToBytes(photo);
         String encode = Base64.getEncoder().encodeToString(bytes);

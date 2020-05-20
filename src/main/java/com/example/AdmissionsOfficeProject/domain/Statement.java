@@ -1,6 +1,8 @@
 package com.example.AdmissionsOfficeProject.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,6 +23,8 @@ public class Statement {
     private Faculty faculty;
 
     @Column(name = "average_certificate_mark")
+    @Min(value = 100, message = "Mark can`t be less, than 100!")
+    @Max(value = 200, message = "Mark can`t be more, than 200!")
     private int averageCertificateMark;
 
     @ManyToMany

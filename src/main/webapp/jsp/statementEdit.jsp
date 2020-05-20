@@ -20,46 +20,56 @@
 
 <div id='center' class="main center">
     <div class="mainInner">
-        <form action="${pageContext.request.contextPath}/certificate/edit" method="post">
+        <form action="${pageContext.request.contextPath}/statement/edit" method="post">
             <table class="table table-striped">
                 <thead id="tableHeader">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col"><spring:message code="certificate.select"/></th>
-                    <th scope="col"><spring:message code="certificate.putmark"/></th>
-                    <th scope="col"><spring:message code="action"/>Action</th>
+                    <th scope="col"><spring:message code="statement.useremail"/></th>
+                    <th scope="col"><spring:message code="faculty.title"/></th>
+                    <th scope="col"><spring:message code="statement.averCert"/></th>
+                    <th scope="col"><spring:message code="statement.averEx"/></th>
                 </tr>
                 </thead>
 
                 <tbody>
+
                 <tr>
-                    <th scope="row">${certificate.id}</th>
+                    <td>#
+                        <input type="hidden" value="${statement.id}" name="id">
+                    </td>
+                    <td>${sessionScope.user.get().email} </td>
                     <td>
-                        <div class="form-group">
-                            <select name="subjectId" class="form-control" id="exampleFormControlSelect2">
-                                <option value="" selected> ${certificate.subject.title} </option>
-                                <c:forEach var="subject" items="${subjects}">
-                                    <option value="${subject.id}">${subject.title}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
+                        <label for="exampleFormControlSelect2"> </label>
+                        <select name="facultyId" class="form-control" id="exampleFormControlSelect2">
+                            <option value="" disabled selected hidden><spring:message code="statement.select"/></option>
+                            <c:forEach items="${faculties}" var="faculty">
+                                <option value="${faculty.id}">${faculty.title}</option>
+                            </c:forEach>
+                        </select>
                     </td>
                     <td>
-                        <label class="markinput">
-                            <input type="number" placeholder="Mark" name="mark" value="${certificate.mark}"/>
-                        </label>
+                        <input type="number" id="averCert" name="averageCertificateMark" value="averageCertificateMark"
+                               placeholder="Average Certificate Mark">
                     </td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/certificate"> <spring:message
-                                code="certificate.back"/> </a>
+                        <select name="certificateList" multiple class="form-control">
+                            <option value="" disabled selected hidden>
+                                <spring:message code="statement.selectCert"/></option>
+                            <c:forEach items="${certificates}" var="certificate">
+                                <option value="${certificate.id}">${certificate.subject.title}
+                                    - ${certificate.mark}</option>
+                            </c:forEach>
+                        </select>
                     </td>
                 </tr>
+
                 </tbody>
             </table>
 
-            <button class="buttonAdd"><spring:message code="saveEdits"/></button>
+            <button type="submit" class="buttonAdd"><spring:message code="saveEdits"/></button>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <input type="hidden" value="${certificate.id}" name="id">
+            <input type="hidden" value="${statement.id}" name="id">
         </form>
     </div>
 </div>
